@@ -380,35 +380,173 @@ theorem even_of_real_matrix_sq_eq_neg_one' :
 
 -- ## Lean Code adding grind (wherever possible) and correcting small errors concerning universes and types
 
-theorem even_of_real_matrix_sq_eq_neg_one'' :
-      ∀ {n : Type u} [inst : Fintype n] [inst_1 : DecidableEq n] {A : Matrix n n ℝ},
-        A ^ 2 = -1 → Even (Fintype.card n) :=
+def example5'' := json% {
+  "document": {
+    "type": "document",
+    "body": [
+      {
+        "type": "Theorem",
+        "label": "thm:A2_minus_I_even_n",
+        "header": "Theorem",
+        "hypothesis": [
+          {
+            "type": "let_statement",
+            "variable_name": "A",
+            "variable_type": "n × n real matrix",
+            "statement": "Let A be an n × n matrix with real number entries."
+          },
+          {
+            "type": "assume_statement",
+            "assumption": "A^2 = -I_n, where I_n is the n × n identity matrix."
+          }
+        ],
+        "claim": "If A^2 = -I_n for an n × n real matrix A, then n is an even integer.",
+        "proof": [
+          {
+            "type": "assert_statement",
+            "claim": "Taking determinants on both sides of A^2 = -I_n gives det(A^2) = det(-I_n).",
+            "proof_method": "by applying the determinant function to both sides of the matrix equation"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "det(A^2) = (det A)^2.",
+            "proof_method": "use multiplicativity of the determinant det(AB) = det(A) det(B)"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "det(-I_n) = (-1)^n.",
+            "proof_method": "use that -I_n has eigenvalue −1 with multiplicity n, hence determinant is product of eigenvalues"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "(det A)^2 = (-1)^n.",
+            "proof_method": "combine the identities det(A^2) = (det A)^2 and det(A^2) = det(-I_n)"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "Since A is a real matrix, det A is a real number, so (det A)^2 is a non-negative real number.",
+            "proof_method": "a square of a real number is always ≥ 0"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "The only way for the real number (-1)^n to be non-negative is that n is an even integer.",
+            "proof_method": "(-1)^n = 1 if n is even and -1 if n is odd"
+          },
+          {
+            "type": "conclude_statement",
+            "claim": "Therefore n is an even integer."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+/--
+error: unknown universe level `u_1`
+---
+error: Invalid field `det`: The environment does not contain `Int.det`
+  -1
+has type
+  ℤ
+---
+error: unknown universe level `u`
+---
+error: unknown universe level `u_1`
+---
+error: Invalid field `det`: The environment does not contain `Int.det`
+  -1
+has type
+  ℤ
+---
+error: unknown universe level `u_2`
+---
+error: unknown universe level `u_1`
+---
+error: unknown universe level `u_1`
+---
+error: unknown universe level `u`
+-/
+#guard_msgs in
+theorem even_of_real_matrix_sq_eq_neg_one''' :
+      ∀ {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}, A ^ 2 = -1 → Even n :=
     by
-    intro n inst inst_1 A a_4208770022378861731
-    have assert_7871333867466716481 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = (-1: Matrix n n ℝ).det :=
-      by grind
-    have assert_11631530961235148209 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
+    intro n A a_4208770022378861731
+    have assert_10426046333095612625 :
+      ∀ {n : Type u_1} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → (A ^ 2).det = (-1).det :=
+      by
+      repeat (sorry)
+    have assert_13649062577554752972 :
+      ∀ {n : Type u} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
         A ^ 2 = -1 → (A ^ 2).det = A.det ^ 2 :=
       by
       simp only [Matrix.det_pow, Lake.FamilyOut.fam_eq, implies_true]
-    have assert_10225395462020362468 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (-1: Matrix n n ℝ).det = (-1) ^ Fintype.card n :=
+    have assert_9605516113412032034 :
+      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → (-1).det = (-1) ^ Fintype.card n :=
       by
       repeat (sorry)
-    have assert_7530522241040816350 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
+    have assert_382079968291488139 :
+      ∀ {n : Type u_2} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
         A ^ 2 = -1 → A.det ^ 2 = (-1) ^ Fintype.card n :=
-      by grind
+      by
+      repeat (sorry)
     have assert_2171029472328897308 :
-      ∀ {n : Type u} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
+      ∀ {n : Type u_1} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
         A ^ 2 = -1 → 0 ≤ A.det ^ 2 :=
       by
-      repeat (sorry)
-    have assert_5533784932822112932 : Even (Fintype.card n) :=
+      exact fun {n} [DecidableEq n] [Fintype n] A a => sq_nonneg A.det
+    have assert_15661547852293129948 :
+      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] {A : Matrix n n ℝ},
+        A ^ 2 = -1 → Even (Fintype.card n) :=
       by
       repeat (sorry)
-    assumption
+    have :
+      ∀ {n : Type u} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → Even (Fintype.card n) :=
+      by
+      repeat (sorry)
+    repeat (sorry)
+
+-- ## Finished Code corrected by hand
+theorem even_of_real_matrix_sq_eq_neg_one'''' :
+      ∀ {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}, A ^ 2 = -1 → Even n :=
+    by
+    intro n A a_4208770022378861731
+    have assert_10426046333095612625 :
+      ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ),
+        A ^ 2 = -1 → (A ^ 2).det = (-1: Matrix (Fin n) (Fin n) ℝ ).det :=
+      by
+      grind -- filled in by me
+    have assert_13649062577554752972 :
+      ∀ {n : ℕ } (A : Matrix (Fin n) (Fin n) ℝ),
+        A ^ 2 = -1 → (A ^ 2).det = A.det ^ 2 :=
+      by
+      simp only [Matrix.det_pow, Lake.FamilyOut.fam_eq, implies_true]
+    have assert_9605516113412032034 :
+      ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ),
+        A ^ 2 = -1 → (-1 : Matrix (Fin n) (Fin n) ℝ).det = (-1) ^ n :=
+      by
+      intro n A h --filled in by me
+      simp [Matrix.det_neg] --filled in by me
+    have assert_382079968291488139 :
+      ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ),
+        A ^ 2 = -1 → A.det ^ 2 = (-1) ^ n :=
+      by
+      grind --filled in by me
+    have assert_2171029472328897308 :
+      ∀ {n : ℕ}(A : Matrix (Fin n) (Fin n) ℝ) ,
+        A ^ 2 = -1 → 0 ≤ A.det ^ 2 :=
+      by
+      exact fun A a => sq_nonneg A.det
+    have assert_15661547852293129948 :
+      ∀ {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ},
+        A ^ 2 = -1 → Even (n) :=
+      by --filled in by me
+      intro n A h
+      have h1 : (-1: ℝ)^n ≥ 0 := by grind
+      have h2 : (-1: ℝ)^n = 1 ∨ (-1: ℝ)^n = -1 := by exact neg_one_pow_eq_or ℝ n
+      have h3 : (-1: ℝ)^n =1 := by grind
+      grind [neg_one_pow_eq_one_iff_even]
+    grind

@@ -5,7 +5,7 @@
    "type": "git",
    "subDir": "LeanAideCore",
    "scope": "",
-   "rev": "a23daed17bd1887818f86cd5001779db32a6ff1b",
+   "rev": "262c3e7a657bbd0f5b522b0450dd1cd4d8055622",
    "name": "leanaidecore",
    "manifestFile": "lake-manifest.json",
    "inputRev": "main",
