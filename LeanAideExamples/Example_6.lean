@@ -3,4 +3,258 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
+
+
+/-
+## Theorem:
+
+Let $(X, d)$ be a metric space. A subset $S \subseteq X$ is bounded if there exists a point $x_0 \in X$ and a real number $M > 0$ such that $d(x, x_0) < M$ for all $x \in S$. Prove that if $A$ and $B$ are bounded subsets of $X$, then their union $A \cup B$ is also bounded.
+
+## Proof:
+Assume
+1. $(X,d)$ is a metric space.
+2. $A,B\subseteq X$.
+3. There exist $x_A\in X$ and $r_A\in\mathbb R$ with $r_A>0$ and
+   $$\forall a\in A,\;d(a,x_A)< r_A.$$
+4. There exist $x_B\in X$ and $r_B\in\mathbb R$ with $r_B>0$ and
+   $$\forall b\in B,\;d(b,x_B)< r_B.$$
+
+Define $R := \max\bigl(r_A,\;r_B + d(x_B,x_A)\bigr)$.  Then $R>0$ since $r_A>0$ and $r_B + d(x_B,x_A)>0$.
+
+We aim to show
+  $$\forall x\in A\cup B,\;d(x,x_A)< R$$
+
+which by definition will establish that $A\cup B$ is bounded with center $x_A$ and radius $R$.
+
+Let $x$ be an arbitrary element of $A\cup B$.  We proceed by case analysis on the membership of $x$.
+
+Case 1: $x\in A$.
+By assumption on $A$, $d(x,x_A)< r_A$.  Since $r_A\le R$ by the definition of $R$, we deduce
+$$d(x,x_A)< r_A \le R.$$
+
+Case 2: $x\in B$.
+By assumption on $B$, $d(x,x_B) < r_B$.  By the triangle inequality,
+$$d(x,x_A)\le d(x,x_B)+d(x_B,x_A).$$
+Combining this with $d(x,x_B)< r_B$ and the definition of $R$,
+$$d(x,x_B)+d(x_B,x_A)< r_B + d(x_B,x_A)\le R,$$
+hence
+$$d(x,x_A)< R.$$
+
+In both cases we have shown $d(x,x_A)< R$.  Therefore
+$$\forall x\in A\cup B,\;d(x,x_A)< R,$$
+and thus $A\cup B$ is bounded.
+
+-/
+-- ## Structured JSON Proof
+
+def example6 := json% {
+  "document": {
+    "type": "document",
+    "body": [
+      {
+        "type": "Theorem",
+        "header": "Theorem",
+        "label": "thm:union_bounded",
+        "hypothesis": [
+          {
+            "type": "assume_statement",
+            "assumption": "(X, d) is a metric space."
+          },
+          {
+            "type": "assume_statement",
+            "assumption": "A and B are subsets of X."
+          }
+        ],
+        "claim": "If A and B are bounded subsets of X, then A ∪ B is bounded.",
+        "proof": [
+          {
+            "type": "some_statement",
+            "variable_name": "x_A",
+            "variable_kind": "element of X",
+            "statement": "There exists x_A in X."
+          },
+          {
+            "type": "some_statement",
+            "variable_name": "r_A",
+            "variable_kind": "real number",
+            "properties": "> 0",
+            "statement": "There exists r_A in ℝ such that r_A > 0."
+          },
+          {
+            "type": "assert_statement",
+            "claim": "For all a in A, d(a, x_A) < r_A."
+          },
+          {
+            "type": "some_statement",
+            "variable_name": "x_B",
+            "variable_kind": "element of X",
+            "statement": "There exists x_B in X."
+          },
+          {
+            "type": "some_statement",
+            "variable_name": "r_B",
+            "variable_kind": "real number",
+            "properties": "> 0",
+            "statement": "There exists r_B in ℝ such that r_B > 0."
+          },
+          {
+            "type": "assert_statement",
+            "claim": "For all b in B, d(b, x_B) < r_B."
+          },
+          {
+            "type": "let_statement",
+            "variable_name": "R",
+            "variable_type": "real number",
+            "value": "max(r_A, r_B + d(x_B, x_A))",
+            "statement": "Define R := max(r_A, r_B + d(x_B, x_A))."
+          },
+          {
+            "type": "assert_statement",
+            "claim": "R > 0",
+            "proof_method": "By definition of max and since r_A > 0 and r_B + d(x_B, x_A) > 0."
+          },
+          {
+            "type": "assume_statement",
+            "assumption": "Let x be an arbitrary element of A ∪ B."
+          },
+          {
+            "type": "pattern_cases_proof",
+            "on": "x",
+            "proof_cases": [
+              {
+                "pattern": "x ∈ A",
+                "proof": [
+                  {
+                    "type": "assert_statement",
+                    "claim": "d(x, x_A) < R",
+                    "proof_method": "Since d(x, x_A) < r_A and r_A ≤ R."
+                  }
+                ]
+              },
+              {
+                "pattern": "x ∈ B",
+                "proof": [
+                  {
+                    "type": "assert_statement",
+                    "claim": "d(x, x_A) < R",
+                    "proof_method": "By triangle inequality and since d(x, x_B) < r_B and r_B + d(x_B, x_A) ≤ R."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "conclude_statement",
+            "claim": "A ∪ B is bounded."
+          }
+        ]
+      }
+    ]
+  }
+}
+
 #leanaide_connect
+
+
+-- ## Lean Proof generated by LeanAide
+/--
+warning: unused variable `inst`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+-/
+#guard_msgs in
+theorem is_bounded_union :
+      ∀ {α : Type u} [inst : PseudoMetricSpace α] {A B : Set α},
+        Bornology.IsBounded A → Bornology.IsBounded B → Bornology.IsBounded (A ∪ B) :=
+    by
+    intro α inst A B a_1346294745272406799 a_18315714507291139753
+    simp only [Bornology.isBounded_union]
+    exact ⟨a_1346294745272406799, a_18315714507291139753⟩
+
+
+/-
+## Shorter Proof of the same theorem:
+
+Since $A$ is bounded, there exists $x_A \in X$ and $M_A > 0$ such that $d(a, x_A) < M_A$ for all $a \in A$.Since $B$ is bounded, there exists $x_B \in X$ and $M_B > 0$ such that $d(b, x_B) < M_B$ for all $b \in B$.We want to bound $A \cup B$. Let us choose the reference point $x_A$.For any $y \in A \cup B$:
+
+1. If $y \in A$, then $d(y, x_A) < M_A$.
+2. If $y \in B$, by the triangle inequality, $d(y, x_A) \le d(y, x_B) + d(x_B, x_A)$.Since $y \in B$, $d(y, x_B) < M_B$.Thus, $d(y, x_A) < M_B + d(x_B, x_A)$.Let $M = \max(M_A, M_B + d(x_B, x_A))$. Then for all $y \in A \cup B$, $d(y, x_A) < M$.Therefore, $A \cup B$ is bounded.
+
+-/
+
+-- ## Structured JSON Proof
+
+def example6' := json% {
+  "document": {
+    "type": "document",
+    "title": "Boundedness of Union of Bounded Sets",
+    "body": [
+      {
+        "type": "Theorem",
+        "header": "Theorem",
+        "label": "thm:union_bounded",
+        "hypothesis": [
+          {
+            "type": "let_statement",
+            "variable_name": "(X, d)",
+            "variable_type": "metric space",
+            "statement": "Let (X, d) be a metric space."
+          },
+          {
+            "type": "assume_statement",
+            "assumption": "A and B are bounded subsets of X."
+          }
+        ],
+        "claim": "If A and B are bounded subsets of X, then their union A ∪ B is bounded.",
+        "proof": [
+          {
+            "type": "assert_statement",
+            "claim": "There exist x_A in X and M_A > 0 such that for all a in A, d(a, x_A) < M_A.",
+            "label": "step:A_bounded"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "There exist x_B in X and M_B > 0 such that for all b in B, d(b, x_B) < M_B.",
+            "label": "step:B_bounded"
+          },
+          {
+            "type": "let_statement",
+            "variable_name": "M",
+            "value": "max(M_A, M_B + d(x_B, x_A))",
+            "statement": "Let M = max(M_A, M_B + d(x_B, x_A))."
+          },
+          {
+            "type": "assert_statement",
+            "claim": "For any y in A ∪ B, d(y, x_A) < M.",
+            "proof_method": "case analysis",
+            "results_used": [
+              {
+                "statement": "triangle inequality"
+              }
+            ],
+            "label": "step:union_bound"
+          },
+          {
+            "type": "conclude_statement",
+            "claim": "Therefore, A ∪ B is bounded."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+-- ## Lean Code generated by LeanAide
+/--
+warning: unused variable `inst`
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+-/
+#guard_msgs in
+theorem is_bounded_union' :
+      ∀ {X : Type u} [inst : MetricSpace X] {A B : Set X},
+        Bornology.IsBounded A → Bornology.IsBounded B → Bornology.IsBounded (A ∪ B) :=
+    by
+    intro X inst A B a_1346294745272406799 a_18315714507291139753
+    simp only [Bornology.isBounded_union]
+    exact ⟨a_1346294745272406799, a_18315714507291139753⟩

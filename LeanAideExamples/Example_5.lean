@@ -3,8 +3,6 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
-#leanaide_connect
-
 /-
 ## Theorem:
 
@@ -550,3 +548,157 @@ theorem even_of_real_matrix_sq_eq_neg_one'''' :
       have h3 : (-1: ℝ)^n =1 := by grind
       grind [neg_one_pow_eq_one_iff_even]
     grind
+
+
+def example5_prime:= json% {
+  "document": {
+    "type": "document",
+    "body": [
+      {
+        "type": "Theorem",
+        "label": "thm:A2_minus_I_even_n",
+        "header": "Theorem",
+        "hypothesis": [
+          {
+            "type": "let_statement",
+            "variable_name": "A",
+            "variable_type": "n × n real matrix",
+            "statement": "Let A be an n × n matrix with real number entries."
+          },
+          {
+            "type": "assume_statement",
+            "assumption": "A^2 = -I_n, where I_n is the n × n identity matrix."
+          }
+        ],
+        "claim": "If A^2 = -I_n for an n × n real matrix A, then n is an even integer.",
+        "proof": [
+          {
+            "type": "assert_statement",
+            "claim": "Taking determinants on both sides of A^2 = -I_n gives det(A^2) = det(-I_n).",
+            "proof_method": "by applying the determinant function to both sides of the matrix equation"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "det(A^2) = (det A)^2.",
+            "proof_method": "use multiplicativity of the determinant det(AB) = det(A) det(B)"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "det(-I_n) = (-1)^n.",
+            "proof_method": "use that -I_n has eigenvalue −1 with multiplicity n, hence determinant is product of eigenvalues"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "(det A)^2 = (-1)^n.",
+            "proof_method": "combine the identities det(A^2) = (det A)^2 and det(A^2) = det(-I_n)"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "Since A is a real matrix, det A is a real number, so (det A)^2 is a non-negative real number.",
+            "proof_method": "a square of a real number is always ≥ 0"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "The only way for the real number (-1)^n to be non-negative is that n is an even integer.",
+            "proof_method": "(-1)^n = 1 if n is even and -1 if n is odd"
+          },
+          {
+            "type": "conclude_statement",
+            "claim": "Therefore n is an even integer."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+#leanaide_connect "http://drongo:8041"
+
+theorem even_n_of_matrix_sq_eq_neg_one :
+      ∀ {n : Type u} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → Even (Fintype.card n) :=
+    by
+    intro n inst inst_1 A a_4208770022378861731
+    have assert_7871333867466716481 :
+      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → (A ^ 2).det = (-1).det :=
+      by repeat (sorry)
+    have assert_11631530961235148209 :
+      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → (A ^ 2).det = A.det ^ 2 :=
+      by simp only [Matrix.det_pow, Lake.FamilyOut.fam_eq, implies_true]
+    have assert_6473705466488421072 :
+      ∀ [inst : Fintype n] [inst_1 : DecidableEq n], (-1).det = (-1) ^ Fintype.card n := by
+      repeat (sorry)
+    have assert_7530522241040816350 :
+      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → A.det ^ 2 = (-1) ^ Fintype.card n :=
+      by repeat (sorry)
+    have assert_8649944411167242073 :
+      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → 0 ≤ A.det ^ 2 :=
+      by repeat (sorry)
+    have assert_1052081918739923924 :
+      ∀ [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → Even (Fintype.card n) :=
+      by repeat (sorry)
+    have : ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ), A ^ 2 = -1 → Even n := by repeat (sorry)
+    repeat (sorry)
+/--
+error: unsolved goals
+n : Type u
+inst : Fintype n
+inst_1 : DecidableEq n
+A : Matrix n n ℝ
+a_4208770022378861731 : A ^ 2 = -1
+assert_14528603491995352987 :
+  ∀ [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ), A ^ 2 = -1 → ∃ L, L = A.mulVecLin
+assert_2151845572112414521 : ∀ (v : n → ℝ), (A ^ 2).mulVec v = -v
+assert_13855241483726700992 : A ^ 2 + 1 = 0
+assert_13699856420366142898 : minpoly ℝ A ≠ 1
+assert_3355764024912724543 :
+  Polynomial.rootMultiplicity Complex.I (Polynomial.X ^ 2 + 1) = 1 ∧
+    Polynomial.rootMultiplicity (-Complex.I) (Polynomial.X ^ 2 + 1) = 1 ∧
+      ∀ (x : ℝ), Polynomial.eval x (Polynomial.X ^ 2 + 1) ≠ 0
+⊢ Even (Fintype.card n)
+-/
+#guard_msgs in
+theorem even_n_of_real_matrix_sq_eq_neg_one :
+      ∀ {n : Type u} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → Even (Fintype.card n) :=
+    by
+    intro n inst inst_1 A a_4208770022378861731
+    have assert_14528603491995352987 :
+      ∀ [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → ∃ (L : (n → ℝ) →ₗ[ℝ] n → ℝ), L = A.mulVecLin :=
+      by simp only [↓existsAndEq, implies_true]
+    have assert_2151845572112414521 : ∀ (v : n → ℝ), (A ^ 2).mulVec v = -v := by repeat (sorry)
+    have assert_13855241483726700992 : A ^ 2 + 1 = 0 := by repeat (sorry)
+    have assert_13699856420366142898 : minpoly ℝ A ≠ 1 := by repeat (sorry)
+    have assert_3355764024912724543 :
+      Polynomial.rootMultiplicity Complex.I (Polynomial.X ^ 2 + 1) = 1 ∧
+        Polynomial.rootMultiplicity (-Complex.I) (Polynomial.X ^ 2 + 1) = 1 ∧
+          ∀ (x : ℝ), Polynomial.eval x (Polynomial.X ^ 2 + 1) ≠ 0 :=
+      by repeat (sorry)
+-------------------------------------------------------------------------------------------
+
+theorem even_n_of_real_matrix_sq_eq_neg_one' :
+      ∀ {n : Type u} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → Even (Fintype.card n) :=
+    by
+    intro n inst inst_1 A a_4208770022378861731
+    have assert_14528603491995352987 :
+      ∀ [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
+        A ^ 2 = -1 → ∃ (L : (n → ℝ) →ₗ[ℝ] n → ℝ), L = A.mulVecLin :=
+      by simp only [↓existsAndEq, implies_true]
+    have assert_2151845572112414521 : ∀ (v : n → ℝ), (A ^ 2).mulVec v = -v := by repeat (sorry)
+    have assert_13855241483726700992 : A ^ 2 + 1 = 0 := by repeat (sorry)
+    have assert_13699856420366142898 : minpoly ℝ A ≠ 1 := by repeat (sorry)
+    have assert_3355764024912724543 :
+      Polynomial.rootMultiplicity Complex.I (Polynomial.X ^ 2 + 1) = 1 ∧
+        Polynomial.rootMultiplicity (-Complex.I) (Polynomial.X ^ 2 + 1) = 1 ∧
+          ∀ (x : ℝ), Polynomial.eval x (Polynomial.X ^ 2 + 1) ≠ 0 :=
+      by repeat (sorry)
+    sorry
+
+---------------------------------------------------------------------------------------------------------------------------------
