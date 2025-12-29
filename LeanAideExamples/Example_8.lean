@@ -3,7 +3,7 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
-#leanaide_connect
+
 
 /-
 ## Theorem:
@@ -111,8 +111,15 @@ def example8 := json% {
   }
 }
 
+#leanaide_connect "http://drongo:8041"
 
-#codegen example8
+theorem nonempty_inter_of_nonempty_open_of_nonempty_open_of_irreducible_space :
+      ∀ {X : Type u} [inst : TopologicalSpace X] [IrreducibleSpace X] {s t : Set X},
+        IsOpen s → IsOpen t → s.Nonempty → t.Nonempty → (s ∩ t).Nonempty :=
+    by
+    intro X inst inst_7962068596221354082 s t a_16334558168529264107 a_9352263323173369225
+      a_2280413134089396179 a_17002169952424570127
+    grind only [nonempty_preirreducible_inter]
 
 -------------------------------------------------------------------------------------
 

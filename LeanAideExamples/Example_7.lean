@@ -188,7 +188,7 @@ def example7' := json% {
             "statement": "Let L ∈ X."
           }
         ],
-        "claim": "The sequence (x_n) converges to the point L ∈ X if and only if the sequence is eventually constant equal to L, i.e., there exists an integer N such that for all n ≥ N, x_n = L.",
+        "claim": "The sequence (x_n) converges to point L ∈ X if and only if the sequence is eventually constant equal to L, i.e., there exists an integer N such that for all n ≥ N, x_n = L.",
         "proof": [
           {
             "type": "Section",
@@ -209,23 +209,23 @@ def example7' := json% {
               },
               {
                 "type": "assert_statement",
-                "claim": "S is countably infinite if it is infinite.",
+                "claim": "S has to be countably infinite if it is infinite.",
                 "proof_method": "S is an infinite subset of ℕ, hence it is countably infinite."
               },
               {
                 "type": "contradiction_statement",
-                "assumption": "S is infinite.",
+                "assumption": "S is an infinite set.",
                 "proof": [
                   {
                     "type": "let_statement",
                     "variable_name": "A",
                     "variable_type": "subset of X",
                     "value": "{ x_n ∣ n ∈ S }",
-                    "statement": "Let A := { x_n ∣ n ∈ S } ⊆ X, the set of all values of the sequence that are different from L."
+                    "statement": "Let A := { x_n ∣ n ∈ S } ⊆ X, i.e., the set of all values of the sequence that are different from L."
                   },
                   {
                     "type": "assert_statement",
-                    "claim": "A is countable.",
+                    "claim": "A is a countable set.",
                     "proof_method": "A is the image of the countable set S under the map n ↦ x_n, hence A is at most countable and therefore countable."
                   },
                   {
@@ -297,7 +297,100 @@ def example7' := json% {
     ]
   }
 }
-
+#leanaide_connect "http://drongo:8041"
+theorem seq_tendsto_iff_eventually_const_in_cocountable_topology_of_uncountable :
+      ∀ {X : Type u_1} [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            (Filter.Tendsto x Filter.atTop (nhds L) ↔ ∃ (N : ℕ), ∀ (n : ℕ), N ≤ n → x n = L) :=
+    by
+    intro X inst x L a_8023185252012169551 a_10565985414982225241
+    let S : ∀ {X : Type u}, (ℕ → X) → X → Set ℕ := fun {X} x L => {n : ℕ | x n ≠ L}
+    have assert_10728938351967813086 :
+      ∀ [inst : TopologicalSpace X],
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            ∀ (x : ℕ → X) (L : X),
+              Filter.Tendsto x Filter.atTop (nhds L) →
+                have S : Set ℕ := {n : ℕ | x n ≠ L};
+                S.Infinite → S.Countable :=
+      by repeat (sorry)
+    have :
+      ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            Filter.Tendsto x Filter.atTop (nhds L) → {n : ℕ | x n ≠ L}.Infinite :=
+      by
+      intro contraHyp
+      let A : Set X := x_n '' S
+      have assert_2209483546090870640 :
+        ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            (∀ (U : Set X), IsOpen U → L ∈ U → ∀ᶠ (n : ℕ) in Filter.atTop, x n ∈ U) →
+              (x '' {n : ℕ | x n ≠ L}).Countable :=
+        by repeat (sorry)
+      let U {X : Type u} (A : Set X) : Set X := Set.univ \ A
+      have assert_4126217845522043416 :
+        ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            IsOpen (x '' {n : ℕ | x n ≠ L})ᶜ ∧ L ∈ (x '' {n : ℕ | x n ≠ L})ᶜ :=
+        by repeat (sorry)
+      have assert_5714478441018183537 :
+        ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+          ¬Set.univ.Countable →
+            (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+              Filter.Tendsto x Filter.atTop (nhds L) →
+                ∃ (N : ℕ), ∀ n ≥ N, x n ∈ (x '' {n : ℕ | x n ≠ L})ᶜ :=
+        by repeat (sorry)
+      have assert_1683820962926340022 :
+        ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+          ¬Set.univ.Countable →
+            (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+              (∀ (U : Set X), IsOpen U → L ∈ U → ∃ (N : ℕ), ∀ ⦃n : ℕ⦄, N ≤ n → x n ∈ U) →
+                have S : Set ℕ := {n : ℕ | x n ≠ L};
+                have A : Set X := x '' S;
+                have U : Set X := Aᶜ;
+                ∃ (N : ℕ), ∀ ⦃n : ℕ⦄, N ≤ n → x n = L :=
+        by repeat (sorry)
+      repeat (sorry)
+    have assert_9316287524406184791 :
+      ∀ [inst : TopologicalSpace X] {x : ℕ → X} {L : X},
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            Filter.Tendsto x Filter.atTop (nhds L) → {n : ℕ | x n ≠ L}.Finite :=
+      by repeat (sorry)
+    have :
+      ∀ [inst : TopologicalSpace X] {x : ℕ → X} {L : X},
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            (∀ (U : Set X), IsOpen U → L ∈ U → ∃ (N : ℕ), ∀ n ≥ N, x n ∈ U) →
+              ∃ (N : ℕ), ∀ n ≥ N, x n = L :=
+      by repeat (sorry)
+    repeat (sorry)
+    have assert_4223848601763852344 :
+      ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+        (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+          (∀ (U : Set X), IsOpen U → L ∈ U → ∃ (N : ℕ), ∀ ⦃n : ℕ⦄, N ≤ n → x n ∈ U) →
+            (have S : Set ℕ := {n : ℕ | x n ≠ L};
+              ∃ (N : ℕ), ∀ ⦃n : ℕ⦄, N ≤ n → x n = L) →
+              ∀ {U : Set X}, IsOpen U → L ∈ U → ∃ (M : ℕ), ∀ ⦃n : ℕ⦄, M ≤ n → x n ∈ U :=
+      by repeat (sorry)
+    have :
+      ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+        (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+          (∀ (U : Set X), IsOpen U → L ∈ U → ∀ᶠ (n : ℕ) in Filter.atTop, x n ∈ U) →
+            (have S : Set ℕ := {n : ℕ | x n ≠ L};
+              ∃ (N : ℕ), ∀ n ≥ N, x n = L) →
+              ∀ (U : Set X), IsOpen U → L ∈ U → ∀ᶠ (n : ℕ) in Filter.atTop, x n ∈ U :=
+      by repeat (sorry)
+    repeat (sorry)
+    have :
+      ∀ [inst : TopologicalSpace X],
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            ∀ (x : ℕ → X) (L : X),
+              Filter.Tendsto x Filter.atTop (nhds L) ↔ ∃ (N : ℕ), ∀ n ≥ N, x n = L :=
+      by repeat (sorry)
 
 -- ## Lean Proof generated by LeanAide
 /--
@@ -810,3 +903,99 @@ theorem cocountable_tendsto_iff_eventually_const :
       repeat (sorry)
     · simp only [Filter.eventually_atTop, Lake.FamilyOut.fam_eq, ge_iff_le, forall_exists_index]
       exact fun x_2 h => tendsto_atTop_of_eventually_const h
+
+------------------------------------------------------------------------------------------------------
+
+theorem seq_tendsto_iff_eventually_const_in_cocountable_topology_of_uncountable :
+      ∀ {X : Type u_1} [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            (Filter.Tendsto x Filter.atTop (nhds L) ↔ ∃ (N : ℕ), ∀ (n : ℕ), N ≤ n → x n = L) :=
+    by
+    intro X inst x L a_8023185252012169551 a_10565985414982225241
+    let S : ∀ {X : Type u_1}, (ℕ → X) → X → Set ℕ := fun {X} x L => {n : ℕ | x n ≠ L}
+    have assert_10728938351967813086 :
+      ∀ [inst : TopologicalSpace X],
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            ∀ (x : ℕ → X) (L : X),
+              Filter.Tendsto x Filter.atTop (nhds L) →
+                have S : Set ℕ := {n : ℕ | x n ≠ L};
+                S.Infinite → S.Countable :=
+      by repeat (sorry)
+    have :
+      ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            Filter.Tendsto x Filter.atTop (nhds L) → {n : ℕ | x n ≠ L}.Infinite :=
+      by
+      intro contraHyp
+      let A : Set X := x_n '' S
+      have assert_2209483546090870640 :
+        ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            (∀ (U : Set X), IsOpen U → L ∈ U → ∀ᶠ (n : ℕ) in Filter.atTop, x n ∈ U) →
+              (x '' {n : ℕ | x n ≠ L}).Countable :=
+        by repeat (sorry)
+      let U {X : Type u_1} (A : Set X) : Set X := Set.univ \ A
+      have assert_4126217845522043416 :
+        ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            IsOpen (x '' {n : ℕ | x n ≠ L})ᶜ ∧ L ∈ (x '' {n : ℕ | x n ≠ L})ᶜ :=
+        by repeat (sorry)
+      have assert_5714478441018183537 :
+        ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+          ¬Set.univ.Countable →
+            (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+              Filter.Tendsto x Filter.atTop (nhds L) →
+                ∃ (N : ℕ), ∀ n ≥ N, x n ∈ (x '' {n : ℕ | x n ≠ L})ᶜ :=
+        by repeat (sorry)
+      have assert_1683820962926340022 :
+        ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+          ¬Set.univ.Countable →
+            (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+              (∀ (U : Set X), IsOpen U → L ∈ U → ∃ (N : ℕ), ∀ ⦃n : ℕ⦄, N ≤ n → x n ∈ U) →
+                have S : Set ℕ := {n : ℕ | x n ≠ L};
+                have A : Set X := x '' S;
+                have U : Set X := Aᶜ;
+                ∃ (N : ℕ), ∀ ⦃n : ℕ⦄, N ≤ n → x n = L :=
+        by repeat (sorry)
+      repeat (sorry)
+    have assert_9316287524406184791 :
+      ∀ [inst : TopologicalSpace X] {x : ℕ → X} {L : X},
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            Filter.Tendsto x Filter.atTop (nhds L) → {n : ℕ | x n ≠ L}.Finite :=
+      by repeat (sorry)
+    have :
+      ∀ [inst : TopologicalSpace X] {x : ℕ → X} {L : X},
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            (∀ (U : Set X), IsOpen U → L ∈ U → ∃ (N : ℕ), ∀ n ≥ N, x n ∈ U) →
+              ∃ (N : ℕ), ∀ n ≥ N, x n = L :=
+      by repeat (sorry)
+    repeat (sorry)
+    have assert_4223848601763852344 :
+      ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+        (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+          (∀ (U : Set X), IsOpen U → L ∈ U → ∃ (N : ℕ), ∀ ⦃n : ℕ⦄, N ≤ n → x n ∈ U) →
+            (have S : Set ℕ := {n : ℕ | x n ≠ L};
+              ∃ (N : ℕ), ∀ ⦃n : ℕ⦄, N ≤ n → x n = L) →
+              ∀ {U : Set X}, IsOpen U → L ∈ U → ∃ (M : ℕ), ∀ ⦃n : ℕ⦄, M ≤ n → x n ∈ U :=
+      by repeat (sorry)
+    have :
+      ∀ [inst : TopologicalSpace X] (x : ℕ → X) (L : X),
+        (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+          (∀ (U : Set X), IsOpen U → L ∈ U → ∀ᶠ (n : ℕ) in Filter.atTop, x n ∈ U) →
+            (have S : Set ℕ := {n : ℕ | x n ≠ L};
+              ∃ (N : ℕ), ∀ n ≥ N, x n = L) →
+              ∀ (U : Set X), IsOpen U → L ∈ U → ∀ᶠ (n : ℕ) in Filter.atTop, x n ∈ U :=
+      by repeat (sorry)
+    repeat (sorry)
+    have :
+      ∀ [inst : TopologicalSpace X],
+        ¬Set.univ.Countable →
+          (∀ (U : Set X), IsOpen U ↔ U = ∅ ∨ Uᶜ.Countable) →
+            ∀ (x : ℕ → X) (L : X),
+              Filter.Tendsto x Filter.atTop (nhds L) ↔ ∃ (N : ℕ), ∀ n ≥ N, x n = L :=
+      by repeat (sorry)
