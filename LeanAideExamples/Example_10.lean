@@ -3,7 +3,7 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
-#leanaide_connect
+#leanaide_connect "http://drongo:8042"
 
 /-
 
@@ -13,17 +13,52 @@ Let $(X, d)$ be a metric space. Let $x$ and $y$ be two distinct points with dist
 
 ## Proof:
 
-We use proof by contradiction.
-1. Assume the balls do intersect. This means there exists a point $z$ that is inside both balls.
-2. Since $z \in B(x, \epsilon/3)$, we know $d(x, z) < \epsilon/3$.3. Since $z \in B(y, \epsilon/3)$, we know $d(y, z) < \epsilon/3$ (and by symmetry $d(z, y) < \epsilon/3$).
-4. Now, we apply the Triangle Inequality to the distance between $x$ and $y$:$$d(x, y) \le d(x, z) + d(z, y).$$
-5. Substitute the values from steps 2 and 3:$$d(x, y) < \epsilon/3 + \epsilon/3 = 2\epsilon/3.$$
-6. But we defined $d(x, y) = \epsilon$.
-7. This leads to $\epsilon < 2\epsilon/3$, which is impossible (since $1$ is not less than $0.66$).Conclusion: The assumption was false; the balls cannot intersect.
+Let $(X,d)$ be a metric space, and let $x,y \in X$ be distinct points such that $d(x,y) = \varepsilon > 0$. Consider the open balls
+\[
+B(x,\varepsilon/3) = \{ z \in X \mid d(z,x) < \varepsilon/3 \}
+\quad\text{and}\quad
+B(y,\varepsilon/3) = \{ z \in X \mid d(z,y) < \varepsilon/3 \}.
+\]
+The claim is that these two sets are disjoint.
+
+Assume for contradiction that the two open balls intersect. Then there exists a point $z \in X$ such that $z \in B(x,\varepsilon/3)$ and $z \in B(y,\varepsilon/3)$. By the definition of open ball, the membership $z \in B(x,\varepsilon/3)$ means that
+\[
+d(z,x) < \varepsilon/3,
+\]
+and the membership $z \in B(y,\varepsilon/3)$ means that
+\[
+d(z,y) < \varepsilon/3.
+\]
+
+Using the triangle inequality for the metric $d$, applied to the points $x,z,y$, we obtain
+\[
+d(x,y) \le d(x,z) + d(z,y).
+\]
+Substituting the strict inequalities for $d(x,z)$ and $d(z,y)$ into the right-hand side, we find
+\[
+d(x,y) \le d(x,z) + d(z,y) < \varepsilon/3 + \varepsilon/3 = 2\varepsilon/3.
+\]
+
+On the other hand, by hypothesis we have $d(x,y) = \varepsilon$. Combining this with the strict inequality above gives
+\[
+\varepsilon = d(x,y) < 2\varepsilon/3.
+\]
+Since $\varepsilon > 0$, we may divide both sides of this inequality by $\varepsilon$ and obtain
+\[
+1 < 2/3,
+\]
+which is impossible.
+
+This contradiction arises from the assumption that a point $z$ lies in the intersection of $B(x,\varepsilon/3)$ and $B(y,\varepsilon/3)$. Therefore no such $z$ exists, and the intersection of the two open balls is empty. In other words,
+\[
+B(x,\varepsilon/3) \cap B(y,\varepsilon/3) = \varnothing.
+\]
 
 -/
 
+
 --## Structured JSON Proof
+
 
 def example10 := json% {
   "document": {
@@ -31,212 +66,57 @@ def example10 := json% {
     "body": [
       {
         "type": "Theorem",
+        "label": "thm:disjoint-balls",
         "header": "Theorem",
-        "label": "thm:disjoint_balls_metric_space",
         "hypothesis": [
           {
-            "type": "let_statement",
-            "variable_name": "<anonymous>",
-            "statement": "Let (X, d) be a metric space."
-          },
-          {
-            "type": "let_statement",
-            "variable_name": "x",
-            "statement": "Let x be a point in X."
-          },
-          {
-            "type": "let_statement",
-            "variable_name": "y",
-            "statement": "Let y be a point in X distinct from x with distance d(x, y) = ε > 0."
+            "type": "assume_statement",
+            "assumption": "(X,d) is a metric space and x, y are two distinct points in X with d(x,y) = \\varepsilon > 0."
           }
         ],
-        "claim": "The open balls B(x, ε/3) and B(y, ε/3) do not intersect.",
+        "claim": "The open balls B(x, \\varepsilon/3) and B(y, \\varepsilon/3) do not intersect; that is, B(x, \\varepsilon/3) \\cap B(y, \\varepsilon/3) = \\varnothing.",
         "proof": [
           {
             "type": "contradiction_statement",
-            "assumption": "The open balls B(x, ε/3) and B(y, ε/3) do intersect.",
+            "assumption": "There exists a point z in the intersection B(x, \\varepsilon/3) \\cap B(y, \\varepsilon/3).",
             "proof": [
               {
-                "type": "some_statement",
+                "type": "let_statement",
                 "variable_name": "z",
-                "variable_kind": "point in X",
-                "properties": "z is in B(x, ε/3) and in B(y, ε/3).",
-                "statement": "There exists a point z in X such that z ∈ B(x, ε/3) and z ∈ B(y, ε/3)."
+                "statement": "Let z \\in X be such that z \\in B(x,\\varepsilon/3) and z \\in B(y,\\varepsilon/3)."
               },
               {
                 "type": "assert_statement",
-                "claim": "d(x, z) < ε/3."
+                "claim": "d(z,x) < \\varepsilon/3 and d(z,y) < \\varepsilon/3.",
+                "proof_method": "By the definition of the open balls B(x,\\varepsilon/3) and B(y,\\varepsilon/3)."
               },
               {
                 "type": "assert_statement",
-                "claim": "d(y, z) < ε/3 and hence, by symmetry of the metric, d(z, y) < ε/3."
+                "claim": "d(x,y) \\le d(x,z) + d(z,y).",
+                "proof_method": "Triangle inequality for the metric d."
               },
               {
                 "type": "assert_statement",
-                "claim": "d(x, y) ≤ d(x, z) + d(z, y).",
-                "proof_method": "Application of the triangle inequality for the metric d."
+                "claim": "d(x,y) < 2\\varepsilon/3.",
+                "proof_method": "From d(x,y) \\le d(x,z) + d(z,y) and the bounds d(x,z) < \\varepsilon/3, d(z,y) < \\varepsilon/3."
               },
               {
                 "type": "assert_statement",
-                "claim": "d(x, y) < 2ε/3.",
-                "proof_method": "Substitute d(x, z) < ε/3 and d(z, y) < ε/3 into d(x, y) ≤ d(x, z) + d(z, y) to obtain d(x, y) < ε/3 + ε/3 = 2ε/3."
+                "claim": "1 < 2/3.",
+                "proof_method": "Using d(x,y) = \\varepsilon and \\varepsilon > 0, divide the inequality d(x,y) < 2\\varepsilon/3 by \\varepsilon."
               },
               {
                 "type": "assert_statement",
-                "claim": "ε < 2ε/3 is obtained, which is impossible since 1 is not less than 2/3.",
-                "proof_method": "We have d(x, y) = ε by assumption and also d(x, y) < 2ε/3, hence ε < 2ε/3, which is a contradiction."
+                "claim": "1 < 2/3 is impossible.",
+                "proof_method": "Basic arithmetic ordering on real numbers."
               }
             ]
           },
           {
             "type": "conclude_statement",
-            "claim": "Therefore, the assumption that B(x, ε/3) and B(y, ε/3) intersect is false, and the open balls B(x, ε/3) and B(y, ε/3) do not intersect."
+            "claim": "The intersection B(x, \\varepsilon/3) \\cap B(y, \\varepsilon/3) is empty; hence B(x, \\varepsilon/3) and B(y, \\varepsilon/3) do not intersect."
           }
         ]
-      }
-    ]
-  }
-}
-
--- ## Lean Proof generated by LeanAide
-/--
-error: Tactic `introN` failed: There are no additional binders or `let` bindings in the goal to introduce
-
-X : Type u
-inst : MetricSpace X
-x y : X
-ε : ℝ
-a_8168151110080492154 : x ≠ y
-a_7759821057048920776 : dist x y = ε
-a_840403697932895042 : 0 < ε
-⊢ ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3)
--/
-#guard_msgs in
-theorem disjoint_ball_of_dist_pos :
-      ∀ {X : Type u} [inst : MetricSpace X] {x y : X} {ε : ℝ},
-        x ≠ y → Dist.dist x y = ε → 0 < ε → Metric.ball x (ε / 3) ∩ Metric.ball y (ε / 3) = ∅ :=
-    by
-    intro X inst x y ε a_8168151110080492154 a_7759821057048920776 a_840403697932895042
-    have : ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-      by
-      intro contraHyp
-      have assert_13469833755810354764 : ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-        by
-        simp only [Metric.mem_ball]
-        exact contraHyp
-      have assert_1196519467533156894 :
-        ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) ∧ Dist.dist x z < ε / 3 :=
-        by
-        repeat (sorry)
-      have assert_9612451266235555645 :
-        ∃ z ∈ Metric.ball x (ε / 3),
-          z ∈ Metric.ball y (ε / 3) ∧ Dist.dist y z < ε / 3 ∧ Dist.dist z y < ε / 3 :=
-        by
-        repeat (sorry)
-      have assert_2007395386274853262 :
-        ∃ z ∈ Metric.ball x (ε / 3),
-          z ∈ Metric.ball y (ε / 3) ∧ Dist.dist x y ≤ Dist.dist x z + Dist.dist z y :=
-        by
-        repeat (sorry)
-      have assert_616892509779817929 :
-        ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) ∧ Dist.dist x y < 2 * ε / 3 :=
-        by
-        repeat (sorry)
-      have assert_6113361050466090372 : ¬∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-        by
-        repeat (sorry)
-      repeat (sorry)
-    have : Metric.ball x (ε / 3) ∩ Metric.ball y (ε / 3) = ∅ :=
-      by
-      repeat (sorry)
-    assumption
-
-/-
-## Rewritten Proof :
-
-Assume that $(X,d)$ is a metric space, and let $x,y \in X$ be distinct points such that $d(x,y) = \varepsilon$ for some $\varepsilon > 0$. We prove that the open balls $B(x,\varepsilon/3)$ and $B(y,\varepsilon/3)$ do not intersect.
-
-Suppose, for the sake of contradiction, that the open balls $B(x,\varepsilon/3)$ and $B(y,\varepsilon/3)$ do intersect. By the definition of intersection of sets, there exists a point $z \in X$ such that $z \in B(x,\varepsilon/3)$ and $z \in B(y,\varepsilon/3)$.
-
-By the definition of open ball in a metric space, the condition $z \in B(x,\varepsilon/3)$ means that $d(x,z) < \varepsilon/3$. Similarly, the condition $z \in B(y,\varepsilon/3)$ means that $d(y,z) < \varepsilon/3$. Since $d$ is a metric, it is symmetric, so from $d(y,z) < \varepsilon/3$ we also have $d(z,y) < \varepsilon/3$.
-
-Using the triangle inequality for the metric $d$, we obtain
-\[
-d(x,y) \le d(x,z) + d(z,y).
-\]
-Substituting the inequalities $d(x,z) < \varepsilon/3$ and $d(z,y) < \varepsilon/3$ into this, we get
-\[
-d(x,y) < \frac{\varepsilon}{3} + \frac{\varepsilon}{3} = \frac{2\varepsilon}{3}.
-\]
-
-On the other hand, by hypothesis, $d(x,y) = \varepsilon$. Combining this equality with the strict inequality above gives
-\[
-\varepsilon = d(x,y) < \frac{2\varepsilon}{3}.
-\]
-Since $\varepsilon > 0$, we may divide both sides of this inequality by $\varepsilon$ and obtain
-\[
-1 < \frac{2}{3},
-\]
-which is false.
-
-This contradiction arises from the assumption that the open balls $B(x,\varepsilon/3)$ and $B(y,\varepsilon/3)$ intersect. Therefore, that assumption must be false, and the open balls $B(x,\varepsilon/3)$ and $B(y,\varepsilon/3)$ do not intersect.
-
--/
-
-def example10' := json% {
-  "document": {
-    "type": "document",
-    "body": [
-      {
-        "type": "Theorem",
-        "hypothesis": [
-          {
-            "type": "assume_statement",
-            "assumption": "(X,d) is a metric space, and x,y ∈ X are distinct points such that d(x,y) = ε for some ε > 0."
-          }
-        ],
-        "claim": "The open balls B(x,ε/3) and B(y,ε/3) do not intersect.",
-        "label": "thm:disjoint-balls",
-        "header": "Theorem",
-        "proof": [
-          {
-            "type": "contradiction_statement",
-            "assumption": "The open balls B(x,ε/3) and B(y,ε/3) intersect.",
-            "proof": [
-              {
-                "type": "some_statement",
-                "variable_name": "z",
-                "variable_kind": "point of X",
-                "properties": "z ∈ B(x,ε/3) and z ∈ B(y,ε/3)",
-                "statement": "There exists a point z ∈ X such that z ∈ B(x,ε/3) and z ∈ B(y,ε/3)."
-              },
-              {
-                "type": "assert_statement",
-                "claim": "d(x,z) < ε/3 and d(y,z) < ε/3 by the definition of open ball in a metric space.",
-                "proof_method": "By definition of open ball."
-              },
-              {
-                "type": "assert_statement",
-                "claim": "d(x,y) ≤ d(x,z) + d(z,y).",
-                "proof_method": "Triangle inequality for the metric d."
-              },
-              {
-                "type": "assert_statement",
-                "claim": "d(x,y) < 2ε/3.",
-                "proof_method": "From d(x,z) < ε/3 and d(z,y) = d(y,z) < ε/3, using the previous inequality."
-              },
-              {
-                "type": "assert_statement",
-                "claim": "ε = d(x,y) < 2ε/3 implies 1 < 2/3, which is impossible for ε > 0.",
-                "proof_method": "Divide both sides by ε > 0 and simplify."
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "type": "conclude_statement",
-        "claim": "Therefore, the open balls B(x,ε/3) and B(y,ε/3) do not intersect."
       }
     ]
   }
@@ -244,91 +124,53 @@ def example10' := json% {
 
 --## Lean Proof generated by LeanAide
 
-  theorem disjoint_ball_third_of_dist_eq :
-      ∀ {X : Type u} [inst : MetricSpace X] {x y : X} {ε : ℝ},
-        x ≠ y → 0 < ε → Dist.dist x y = ε → Metric.ball x (ε / 3) ∩ Metric.ball y (ε / 3) = ∅ :=
-    by
-    intro X inst x y ε a_8168151110080492154 a_840403697932895042 a_7759821057048920776
-    have :
-      ∀ [inst : MetricSpace X] {x y : X} {ε : ℝ},
+theorem disjoint_ball_of_third_dist :
+      ∀ {α : Type u} [inst : MetricSpace α] {x y : α} {ε : ℝ},
         x ≠ y →
-          0 < ε → Dist.dist x y = ε → ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
+          Dist.dist x y = ε →
+            (0 : ℝ) < ε → Metric.ball x (ε / (3 : ℝ)) ∩ Metric.ball y (ε / (3 : ℝ)) = ∅ :=
+    by
+    intro α inst x y ε a_8168151110080492154 a_7759821057048920776 a_840403697932895042
+    have : (∃ (z : α), z ∈ Metric.ball x (ε / (3 : ℝ)) ∩ Metric.ball y (ε / (3 : ℝ))) → False :=
       by
       intro contraHyp
-      have assert_13469833755810354764 : ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-        by
-        simp only [Metric.mem_ball]
-        exact contraHyp a_8168151110080492154 a_840403697932895042 a_7759821057048920776
-      have assert_13469833755810354764 : ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-        by
-        repeat (sorry)
-      have assert_2007395386274853262 :
-        ∃ z ∈ Metric.ball x (ε / 3),
-          z ∈ Metric.ball y (ε / 3) ∧ Dist.dist x y ≤ Dist.dist x z + Dist.dist z y :=
-        by
-        repeat (sorry)
-      have assert_9331197908083463494 :
-        (∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3)) → Dist.dist x y < 2 * ε / 3 :=
-        by
-        repeat (sorry)
-      have assert_2772751969131027110 :
-        ∀ [inst : MetricSpace X] {x y : X} {ε : ℝ},
+      have assert_13755147975140541334 :
+        ∀ [inst : MetricSpace α] (x y : α) (ε : ℝ),
           x ≠ y →
-            0 < ε → Dist.dist x y = ε → ¬∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-        by
-        repeat (sorry)
-      repeat (sorry)
-    repeat (sorry)
-  #check "Error: codegen: no valid function found for key conclude_statement"
-  #check "Tried functions: #[LeanAide.concludeCode]"
-  #check "Errors in functions:"
-  #check ""
-  #check "LeanAide.concludeCode: codegen: conclude_statement does not work for kind [commandSeq]"
-  #check "source:"
-  #check "{\"claim\": \"Therefore, the open balls B(x,ε/3) and B(y,ε/3) do not intersect.\"}"
----------------------------------------------------------------------------------------
--- ## Corrected Lean Proof
-
-theorem disjoint_ball_third_of_dist_eq' :
-      ∀ {X : Type u} [inst : MetricSpace X] {x y : X} {ε : ℝ},
-        x ≠ y → 0 < ε → Dist.dist x y = ε → Metric.ball x (ε / 3) ∩ Metric.ball y (ε / 3) = ∅ :=
-    by
-    intro X inst x y ε a_8168151110080492154 a_840403697932895042 a_7759821057048920776
-
+            Dist.dist x y = ε →
+              (0 : ℝ) < ε →
+                ∀ z ∈ Metric.ball x (ε / (3 : ℝ)),
+                  z ∈ Metric.ball y (ε / (3 : ℝ)) →
+                    Dist.dist z x < ε / (3 : ℝ) ∧ Dist.dist z y < ε / (3 : ℝ) :=
+        by simp_all
+      have assert_10670804600000177889 :
+        ∀ [inst : MetricSpace α] {x y : α} {ε : ℝ},
+          x ≠ y →
+            Dist.dist x y = ε →
+              (0 : ℝ) < ε →
+                ∀ {z : α},
+                  z ∈ Metric.ball x (ε / (3 : ℝ)) →
+                    z ∈ Metric.ball y (ε / (3 : ℝ)) →
+                      Dist.dist x y ≤ Dist.dist x z + Dist.dist z y :=
+        by grind only [dist_triangle]
+      have assert_15246081575098168190 :
+        ∀ [inst : MetricSpace α] {x y : α} {ε : ℝ},
+          x ≠ y →
+            Dist.dist x y = ε →
+              (0 : ℝ) < ε →
+                ∀ {z : α},
+                  z ∈ Metric.ball x (ε / (3 : ℝ)) →
+                    z ∈ Metric.ball y (ε / (3 : ℝ)) → Dist.dist x y < (2 : ℝ) * ε / (3 : ℝ) :=
+        by grind only [Metric.mem_ball, dist_comm, #a5fd]
+      have assert_2190948989336231902 : (1 : Float) < (2 : Float) / 3. := by repeat (sorry)
+      have assert_12346872860079934512 : False := by repeat (sorry)
+      assumption
     have :
-      ∀ [inst : MetricSpace X] {x y : X} {ε : ℝ},
+      ∀ [inst : MetricSpace α] {x y : α} {ε : ℝ},
         x ≠ y →
-          0 < ε → Dist.dist x y = ε → ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-      by
-      intro contraHyp
-      have assert_13469833755810354764 : ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-        by
-        simp only [Metric.mem_ball]
-        exact contraHyp a_8168151110080492154 a_840403697932895042 a_7759821057048920776
-      have assert_13469833755810354764 : ∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-        by
-        grind -- filled in by me
-      have assert_2007395386274853262 :
-        ∃ z ∈ Metric.ball x (ε / 3),
-          z ∈ Metric.ball y (ε / 3) ∧ Dist.dist x y ≤ Dist.dist x z + Dist.dist z y :=
-        by
-        repeat (sorry)
-      have assert_9331197908083463494 :
-        (∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3)) → Dist.dist x y < 2 * ε / 3 :=
-        by
-        repeat (sorry)
-      have assert_2772751969131027110 :
-        ∀ [inst : MetricSpace X] {x y : X} {ε : ℝ},
-          x ≠ y →
-            0 < ε → Dist.dist x y = ε → ¬∃ z ∈ Metric.ball x (ε / 3), z ∈ Metric.ball y (ε / 3) :=
-        by
-        repeat (sorry)
-      repeat (sorry)
+          Dist.dist x y = ε →
+            (0 : ℝ) < ε →
+              Metric.ball x (ε / (3 : ℝ)) ∩ Metric.ball y (ε / (3 : ℝ)) = ∅ ∧
+                Disjoint (Metric.ball x (ε / (3 : ℝ))) (Metric.ball y (ε / (3 : ℝ))) :=
+      by repeat (sorry)
     repeat (sorry)
-  #check "Error: codegen: no valid function found for key conclude_statement"
-  #check "Tried functions: #[LeanAide.concludeCode]"
-  #check "Errors in functions:"
-  #check ""
-  #check "LeanAide.concludeCode: codegen: conclude_statement does not work for kind [commandSeq]"
-  #check "source:"
-  #check "{\"claim\": \"Therefore, the open balls B(x,ε/3) and B(y,ε/3) do not intersect.\"}"

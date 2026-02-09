@@ -1,0 +1,127 @@
+import LeanAideCore
+import Mathlib
+set_option linter.style.commandStart false
+set_option linter.style.longLine false
+
+#leanaide_connect "http://drongo:8042"
+
+/-
+### Theorem:
+Let $(a_n)$ and $(b_n)$ be sequences such that
+\[
+|a_n| \le b_n \quad \text{for all } n
+\]
+and $b_n \to 0$.
+Prove that $a_n \to 0$.
+
+### Proof:
+Assume that $(a_n)$ and $(b_n)$ are sequences of real numbers such that $|a_n| \le b_n$ for all $n$, and that $b_n \to 0$. The goal is to show that $a_n \to 0$.
+
+Let $\varepsilon$ be an arbitrary real number with $\varepsilon > 0$. It suffices to show that there exists a natural number $N$ such that for all $n \ge N$ we have $|a_n - 0| < \varepsilon$.
+
+By the hypothesis that $b_n \to 0$, and by the definition of convergence of a sequence to $0$, there exists a natural number $N$ such that for all $n \ge N$ we have
+\[
+|b_n - 0| < \varepsilon.
+\]
+Since $b_n$ is a real number, the expression $|b_n - 0|$ is equal to $|b_n|$, and therefore for all $n \ge N$,
+\[
+|b_n| < \varepsilon.
+\]
+
+The hypothesis $|a_n| \le b_n$ holds for all $n$. Since $|a_n|$ is a nonnegative real number and $|a_n| \le b_n$, it follows that $b_n \ge 0$ for all $n$. For each $n \ge N$, the inequality $b_n \ge 0$ implies that $|b_n| = b_n$. Thus, for all $n \ge N$ we have
+\[
+|a_n| \le b_n = |b_n| < \varepsilon.
+\]
+
+Therefore, for all $n \ge N$,
+\[
+|a_n - 0| = |a_n| < \varepsilon.
+\]
+This shows that for every $\varepsilon > 0$ there exists a natural number $N$ such that for all $n \ge N$ the inequality $|a_n - 0| < \varepsilon$ holds. By the definition of convergence of a sequence to $0$, this means that $a_n \to 0$.
+
+-/
+
+-- ### JSON Structured Proof
+
+def example26 := json% {
+  "document": {
+    "type": "document",
+    "body": [
+      {
+        "type": "Theorem",
+        "header": "Theorem",
+        "label": "thm:abs_bounded_converges_to_zero",
+        "hypothesis": [
+          {
+            "type": "assume_statement",
+            "assumption": "Let (a_n) and (b_n) be sequences of real numbers such that |a_n| \\le b_n for all n, and b_n \\to 0."
+          }
+        ],
+        "claim": "If (a_n) and (b_n) are sequences of real numbers such that |a_n| \\le b_n for all n and b_n \\to 0, then a_n \\to 0.",
+        "proof": [
+          {
+            "type": "assume_statement",
+            "assumption": "Assume (a_n) and (b_n) are sequences of real numbers such that |a_n| \\le b_n for all n, and b_n \\to 0."
+          },
+          {
+            "type": "assert_statement",
+            "claim": "To prove that a_n \\to 0, it suffices to show that for every real number \\varepsilon > 0 there exists a natural number N such that for all n \\ge N we have |a_n - 0| < \\varepsilon.",
+            "proof_method": "unpacking the definition of convergence of a sequence to 0"
+          },
+          {
+            "type": "some_statement",
+            "variable_name": "\\varepsilon",
+            "variable_kind": "real number",
+            "properties": "with \\varepsilon > 0",
+            "statement": "Let \\varepsilon be an arbitrary real number with \\varepsilon > 0."
+          },
+          {
+            "type": "assert_statement",
+            "claim": "There exists a natural number N such that for all n \\ge N we have |b_n - 0| < \\varepsilon.",
+            "proof_method": "by the hypothesis that b_n \\to 0 and the definition of convergence of a sequence to 0"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "For all n \\ge N we have |b_n| < \\varepsilon.",
+            "proof_method": "since |b_n - 0| = |b_n| for all real numbers b_n"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "For all n, b_n \\ge 0.",
+            "proof_method": "since |a_n| is a nonnegative real number and |a_n| \\le b_n for all n"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "For all n \\ge N, we have |b_n| = b_n.",
+            "proof_method": "because b_n \\ge 0 for all n and equality holds between a nonnegative real number and its absolute value"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "For all n \\ge N, we have |a_n| \\le b_n = |b_n| < \\varepsilon.",
+            "proof_method": "combining |a_n| \\le b_n with b_n = |b_n| and |b_n| < \\varepsilon for n \\ge N"
+          },
+          {
+            "type": "assert_statement",
+            "claim": "For all n \\ge N, we have |a_n - 0| = |a_n| < \\varepsilon.",
+            "proof_method": "since |a_n - 0| = |a_n| for all real numbers a_n"
+          },
+          {
+            "type": "conclude_statement",
+            "claim": "For every \\varepsilon > 0 there exists a natural number N such that for all n \\ge N the inequality |a_n - 0| < \\varepsilon holds, and therefore a_n \\to 0."
+          }
+        ]
+      }
+    ]
+  }
+}
+
+
+-- ## LeanCode generated by LeanAide
+theorem tendsto_zero_of_abs_le_tendsto_zero :
+      ∀ {a b : ℕ → ℝ},
+        (∀ (n : ℕ), |a n| ≤ b n) →
+          Filter.Tendsto b Filter.atTop (nhds (0 : ℝ)) →
+            Filter.Tendsto a Filter.atTop (nhds (0 : ℝ)) :=
+    by
+    intro a b a_4415381681233998019 a_9660317845432767131
+    exact squeeze_zero_norm a_4415381681233998019 a_9660317845432767131

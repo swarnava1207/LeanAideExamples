@@ -10,42 +10,51 @@ Let $A$ be an $n \times n$ matrix with entries in the field of real numbers $\ma
 
 ## Proof:
 
-Assume that $A$ is an $n \times n$ real matrix such that $A^2 = -I_n$. The goal is to show that the integer $n$ is even.
+Assume that $A$ is an $n \times n$ real matrix satisfying $A^2 = -I_n$. The goal is to prove that $n$ is an even integer.
 
-First, consider the matrix $A$ as a linear operator on the real vector space $\mathbb{R}^n$. For each vector $v \in \mathbb{R}^n$ we have
+First, consider $A$ as a linear operator on the real vector space $\mathbb{R}^n$. The equation $A^2 = -I_n$ implies that, as a linear map, $A$ satisfies the polynomial equation
 \[
-A^2 v = -v.
+A^2 + I_n = 0.
 \]
-Thus the polynomial
+Equivalently, the minimal polynomial $m_A(x)$ of $A$ divides the polynomial
 \[
-p(x) = x^2 + 1
-\]
-annihilates $A$ in the sense that $p(A) = A^2 + I_n = 0$. Therefore the minimal polynomial $m_A(x)$ of $A$ divides $x^2 + 1$ in $\mathbb{R}[x]$.
-
-Since $A$ is a real matrix, its minimal polynomial $m_A(x)$ is a monic polynomial with real coefficients, and by the above observation it must be one of the following polynomials:
-\[
-m_A(x) = 1,\quad m_A(x) = x^2 + 1.
-\]
-The case $m_A(x) = 1$ cannot occur because this would imply that $A$ is the zero matrix, which contradicts $A^2 = -I_n \neq 0$. Hence
-\[
-m_A(x) = x^2 + 1.
+p(x) := x^2 + 1.
 \]
 
-The polynomial $x^2 + 1$ has complex roots $i$ and $-i$, each with multiplicity $1$, and no real roots. Since the minimal polynomial of $A$ splits over $\mathbb{C}$ with distinct roots, $A$ is diagonalizable over $\mathbb{C}$. Explicitly, if we extend scalars from $\mathbb{R}$ to $\mathbb{C}$ and regard $A$ as an element of $M_n(\mathbb{C})$, there exists a basis of $\mathbb{C}^n$ consisting of eigenvectors of $A$, and in that basis $A$ is represented by a diagonal matrix whose diagonal entries are eigenvalues of $A$. Because the minimal polynomial is exactly $x^2 + 1$, the only possible eigenvalues of $A$ (over $\mathbb{C}$) are $i$ and $-i$, and both $i$ and $-i$ occur as eigenvalues.
+The polynomial $x^2 + 1$ has distinct complex roots, namely $i$ and $-i$. Therefore $x^2 + 1$ has no repeated roots. Consequently, any divisor of $x^2+1$ also has no repeated roots. Hence the minimal polynomial $m_A(x)$ of $A$ has no repeated roots.
 
-Let $r$ denote the number of times $i$ occurs as a diagonal entry, and let $s$ denote the number of times $-i$ occurs. Since there are $n$ diagonal entries in total, we have
+A real matrix whose minimal polynomial has no repeated roots is diagonalizable over $\mathbb{C}$. Thus, after extending scalars from $\mathbb{R}$ to $\mathbb{C}$, there exists a basis of $\mathbb{C}^n$ with respect to which the matrix of $A$ is diagonal. In particular, all eigenvalues of $A$ (over $\mathbb{C}$) are roots of the polynomial $x^2 + 1$, hence every eigenvalue of $A$ is either $i$ or $-i$.
+
+Let $\lambda_1, \dots, \lambda_n$ denote the eigenvalues of $A$ over $\mathbb{C}$, listed with algebraic multiplicity. Then each $\lambda_j$ belongs to the set $\{i,-i\}$. Let $k$ denote the number of indices $j$ such that $\lambda_j = i$. Then the number of indices $j$ such that $\lambda_j = -i$ is $n-k$.
+
+Consider the determinant of $A$ viewed as a complex matrix. Since $A$ is diagonalizable over $\mathbb{C}$ with eigenvalues $\lambda_1,\dots,\lambda_n$, the determinant of $A$ equals the product of its eigenvalues:
 \[
-r + s = n,
+\det(A) = \prod_{j=1}^n \lambda_j = i^k \cdot (-i)^{n-k}.
 \]
-with $r, s$ nonnegative integers. Since $i$ and $-i$ are complex conjugate and the characteristic polynomial of $A$ has real coefficients, the algebraic multiplicities of $i$ and $-i$ as roots of the characteristic polynomial must be equal. This implies
+On the other hand, the matrix identity $A^2 = -I_n$ implies a relation for the determinant. Taking determinants on both sides and using multiplicativity of the determinant, we obtain
 \[
-r = s.
+\det(A^2) = \det(-I_n).
 \]
-Combining the two equations $r + s = n$ and $r = s$, we obtain
+The left-hand side is
 \[
-n = r + s = 2r.
+\det(A^2) = (\det A)^2.
 \]
-Hence $n$ is equal to twice an integer, so $n$ is even.
+The right-hand side is
+\[
+\det(-I_n) = (-1)^n \det(I_n) = (-1)^n.
+\]
+Thus we obtain the scalar equation
+\[
+(\det A)^2 = (-1)^n.
+\]
+
+Since $A$ has real entries, its determinant $\det A$ is a real number. Therefore $(\det A)^2$ is a nonnegative real number. Hence $(-1)^n$ must be a nonnegative real number. This forces $(-1)^n = 1$, because the only real values of $(-1)^n$ are $1$ and $-1$, and the value $-1$ is not nonnegative. Thus
+\[
+(-1)^n = 1.
+\]
+By the basic properties of integer parity, the equality $(-1)^n = 1$ holds if and only if $n$ is an even integer.
+
+Therefore $n$ is even.
 -/
 
 -- ## Structured JSON Proof
@@ -56,377 +65,77 @@ def example5:= json% {
     "body": [
       {
         "type": "Theorem",
-        "label": "thm:A2-minus-Id-even-n",
+        "label": "thm:A2-equals-minus-I-implies-n-even",
         "header": "Theorem",
         "hypothesis": [
           {
             "type": "let_statement",
             "variable_name": "A",
             "variable_type": "n × n real matrix",
-            "statement": "Let A be an n × n matrix with the entries in the field of real numbers ℝ."
-          },
-          {
-            "type": "assume_statement",
-            "assumption": "A^2 = -I_n, where I_n is the n × n identity matrix."
-          }
-        ],
-        "claim": "Then n is an even integer.",
-        "proof": [
-          {
-            "type": "assume_statement",
-            "assumption": "A is an n × n real matrix such that A^2 = -I_n."
-          },
-          {
-            "type": "assert_statement",
-            "claim": "We can regard A as a linear operator on the real vector space ℝ^n."
-          },
-          {
-            "type": "assert_statement",
-            "claim": "For each vector v ∈ ℝ^n we have A^2 v = -v.",
-            "calculation": {
-              "type": "calculation",
-              "inline_calculation": "A^2 v = -v for all v ∈ ℝ^n"
-            }
-          },
-          {
-            "type": "assert_statement",
-            "claim": "The polynomial p(x) = x^2 + 1 annihilates A, i.e., p(A) = A^2 + I_n = 0.",
-            "calculation": {
-              "type": "calculation",
-              "inline_calculation": "p(x) = x^2 + 1,  p(A) = A^2 + I_n = 0"
-            }
-          },
-          {
-            "type": "assert_statement",
-            "claim": "The minimal polynomial m_A(x) of A divides x^2 + 1 in ℝ[x].",
-            "proof_method": "since p(A) = 0, the minimal polynomial divides p"
-          },
-          {
-            "type": "assert_statement",
-            "claim": "Since A is a real matrix, its minimal polynomial m_A(x) is monic with real coefficients and must be one of m_A(x) = 1 or m_A(x) = x^2 + 1.",
-            "proof_method": "m_A divides x^2 + 1 and is monic with real coefficients"
-          },
-          {
-            "type": "assert_statement",
-            "claim": "The case m_A(x) = 1 cannot occur because it would imply A is the zero matrix, contradicting A^2 = -I_n ≠ 0."
-          },
-          {
-            "type": "assert_statement",
-            "claim": "Therefore m_A(x) = x^2 + 1."
-          },
-          {
-            "type": "assert_statement",
-            "claim": "The polynomial x^2 + 1 has complex roots i and −i, each with multiplicity 1, and no real roots.",
-            "calculation": {
-              "type": "calculation",
-              "inline_calculation": "x^2 + 1 = (x - i)(x + i)"
-            }
-          },
-          {
-            "type": "assert_statement",
-            "claim": "Since the minimal polynomial of A splits over ℂ with distinct roots, A is diagonalizable over ℂ.",
-            "proof_method": "a matrix whose minimal polynomial splits as a product of distinct linear factors over the field is diagonalizable over that field"
-          },
-          {
-            "type": "assert_statement",
-            "claim": "Over ℂ, there exists a basis of ℂ^n consisting of eigenvectors of A, and in that basis A is diagonal with diagonal entries equal to eigenvalues of A, each equal to i or −i."
-          },
-          {
-            "type": "let_statement",
-            "variable_name": "r",
-            "variable_type": "integer",
-            "properties": "number of times i occurs as a diagonal entry (its algebraic multiplicity as an eigenvalue of A over ℂ)",
-            "statement": "Let r denote the number of times i occurs as a diagonal entry of the diagonal form of A over ℂ."
-          },
-          {
-            "type": "let_statement",
-            "variable_name": "s",
-            "variable_type": "integer",
-            "properties": "number of times −i occurs as a diagonal entry (its algebraic multiplicity as an eigenvalue of A over ℂ)",
-            "statement": "Let s denote the number of times −i occurs as a diagonal entry of the diagonal form of A over ℂ."
-          },
-          {
-            "type": "assert_statement",
-            "claim": "Since there are n diagonal entries in total, we have r + s = n.",
-            "calculation": {
-              "type": "calculation",
-              "inline_calculation": "r + s = n"
-            }
-          },
-          {
-            "type": "assert_statement",
-            "claim": "Because the characteristic polynomial of A has real coefficients and i and −i are complex conjugate, the algebraic multiplicities of i and −i are equal, so r = s.",
-            "proof_method": "complex conjugate roots of a real-coefficient polynomial have equal multiplicities"
-          },
-          {
-            "type": "assert_statement",
-            "claim": "Combining r + s = n with r = s, we obtain n = 2r.",
-            "calculation": {
-              "type": "calculation",
-              "calculation_sequence": [
-                "r = s",
-                "r + s = n",
-                "r + r = n",
-                "2r = n"
-              ]
-            }
-          },
-          {
-            "type": "conclude_statement",
-            "claim": "Since n = 2r for some integer r, n is even."
-          }
-        ]
-      }
-    ]
-  }
-}
-#leanaide_connect "http://drongo:8041"
-
-#codegen example5
-/-
-theorem even_of_real_matrix_sq_eq_neg_one :
-      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → Even (Fintype.card n) :=
-    by
-    intro n inst inst_1 A a_4208770022378861731
-    have assert_18305017829823632958 :
-      [inst : DecidableEq n] →
-        [inst_1 : Fintype n] → (A : Matrix n n ℝ) → A ^ 2 = -1 → (n → ℝ) →ₗ[ℝ] n → ℝ :=
-      by exact fun [DecidableEq n] [Fintype n] A a => LinearMap.funLeft ℝ ℝ fun a => a
-    have assert_3440599425175588108 :
-      ∀ [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → ∀ (v : n → ℝ), (A ^ 2).mulVec v = -v :=
-      by repeat (sorry)
-    have assert_12156883190029692474 :
-      ∀ [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → A ^ 2 + 1 = 0 :=
-      by repeat (sorry)
-    have assert_16643998006522048267 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → minpoly ℝ A ≠ 1 :=
-      by repeat (sorry)
-    have assert_359598124905250759 :
-      Polynomial.rootMultiplicity Complex.I (Polynomial.X ^ 2 + 1) = 1 ∧
-        Polynomial.rootMultiplicity (-Complex.I) (Polynomial.X ^ 2 + 1) = 1 ∧
-          ∀ (a : ℝ), ¬(Polynomial.X ^ 2 + 1).IsRoot a :=
-      by repeat (sorry)
-    have assert_14584614538691708799 :
-      ∃ (P : GL n ℂ) (D : n → ℂ), ∀ (i : n), D i = Complex.I ∨ D i = -Complex.I := by repeat (sorry)
-    let ⟨P, assert_12705241409530892319⟩ := assert_14584614538691708799
-    let ⟨D, assert_15084352732654563935⟩ := assert_12705241409530892319
-    have assert_13729338157088429970 :
-      Fintype.card { j : n // D j = Complex.I } + Fintype.card { j : n // D j = -Complex.I } =
-        Fintype.card n :=
-      by repeat (sorry)
-    have assert_3212974849522843537 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 →
-          Polynomial.rootMultiplicity Complex.I (Polynomial.map (algebraMap ℝ ℂ) A.charpoly) =
-            Polynomial.rootMultiplicity (-Complex.I) (Polynomial.map (algebraMap ℝ ℂ) A.charpoly) :=
-      by repeat (sorry)
-    have assert_5486931237828874957 : ∀ {n r s : ℕ}, r + s = n → r = s → n = 2 * r := by
-      repeat (sorry)
-    have : ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ), A ^ 2 = -1 → Even n := by repeat (sorry)
-    repeat (sorry)
--/
-
-
-/- ## A different proof of the same theorem
-
-## Proof :
-
- Here is a concise proof using determinants:
- 1. Compute the determinant of both sides:Given $A^2 = -I_n$, we have:$$\det(A^2) = \det(-I_n)$$
- 2. Simplify the left side:Using the multiplicative property of determinants:$$\det(A^2) = (\det(A))^2$$
- 3. Simplify the right side:Using the property $\det(cA) = c^n \det(A)$:$$\det(-I_n) = (-1)^n \det(I_n) = (-1)^n$$
- 4. Compare and Conclude:Equating the results gives:$$(\det(A))^2 = (-1)^n$$
-
- Since $A$ is a real matrix, $\det(A)$ is a real number. Consequently, $(\det(A))^2$ must be non-negative. For $(-1)^n$ to be non-negative, $n$ must be an even integer.
-
--/
-
--- ## JSON Structured proof
-
-def example5' := json% {
-  "document": {
-    "type": "document",
-    "body": [
-      {
-        "type": "Theorem",
-        "label": "thm:A2_minus_I_even_n",
-        "header": "Theorem",
-        "hypothesis": [
-          {
-            "type": "let_statement",
-            "variable_name": "A",
-            "variable_type": "n × n real matrix",
-            "statement": "Let A be an n × n matrix with the entries in the field of real numbers ℝ."
-          },
-          {
-            "type": "assume_statement",
-            "assumption": "A^2 = -I_n, where I_n is the n × n identity matrix."
+            "properties": "satisfying A^2 = -I_n",
+            "statement": "Let A be an n × n matrix with entries in the field of real numbers ℝ such that A^2 = -I_n, where I_n is the n × n identity matrix."
           }
         ],
         "claim": "If A^2 = -I_n for an n × n real matrix A, then n is an even integer.",
         "proof": [
           {
-            "type": "assert_statement",
-            "claim": "Taking the determinants on both sides of A^2 = -I_n gives det(A^2) = det(-I_n).",
-            "proof_method": "apply the determinant function to both sides of the matrix equation"
+            "type": "assume_statement",
+            "assumption": "A is an n × n real matrix satisfying A^2 = -I_n."
           },
           {
             "type": "assert_statement",
-            "claim": "det(A^2) = (det A)^2.",
-            "proof_method": "using multiplicativity of the determinant det(AB) = det(A) det(B)"
+            "claim": "Viewing A as a linear operator on the real vector space ℝ^n, the equation A^2 = -I_n implies that A satisfies the polynomial equation A^2 + I_n = 0, so the minimal polynomial m_A(x) of A divides p(x) := x^2 + 1.",
+            "proof_method": "Substitute A into the polynomial x^2 + 1 and use the definition of minimal polynomial."
           },
           {
             "type": "assert_statement",
-            "claim": "det(-I_n) = (-1)^n.",
-            "proof_method": "using that -I_n has eigenvalue −1 with multiplicity n, hence determinant is product of eigenvalues"
+            "claim": "The polynomial x^2 + 1 has distinct complex roots i and −i, so it has no repeated roots, and consequently any divisor of x^2 + 1, in particular the minimal polynomial m_A(x), also has no repeated roots.",
+            "proof_method": "Compute the roots of x^2 + 1 in ℂ and use that divisors of a separable polynomial are separable."
           },
           {
             "type": "assert_statement",
-            "claim": "(det A)^2 = (-1)^n.",
-            "proof_method": "combining the identities det(A^2) = (det A)^2 and det(A^2) = det(-I_n)"
+            "claim": "Since A is a real matrix whose minimal polynomial has no repeated roots, A is diagonalizable over ℂ; thus there exists a basis of ℂ^n such that the matrix of A is diagonal, and all eigenvalues of A (over ℂ) are roots of x^2 + 1, hence each eigenvalue is either i or −i.",
+            "proof_method": "Use the standard result that a linear operator whose minimal polynomial has no repeated roots is diagonalizable over an algebraically closed field.",
+            "results_used": [
+              {
+                "statement": "A linear operator over a field whose minimal polynomial has no repeated roots is diagonalizable over any field over which the minimal polynomial splits.",
+                "mathlib_identifier": "linear_operator.is_semisimple_of_minpoly_is_separable"
+              }
+            ]
           },
-          {
-            "type": "assert_statement",
-            "claim": "Since A is a real matrix, det A is a real number, so (det A)^2 is a non-negative real number.",
-            "proof_method": "a square of a real number is always ≥ 0"
-          },
-          {
-            "type": "assert_statement",
-            "claim": "The only way for the real number (-1)^n to be non-negative is that n is an even integer.",
-            "proof_method": "(-1)^n = 1 if n is even and -1 if n is odd"
-          },
-          {
-            "type": "conclude_statement",
-            "claim": "Hence n is an even integer."
-          }
-        ]
-      }
-    ]
-  }
-}
-
--- ## Lean Proof generated by LeanAide
-/-
-theorem even_of_real_matrix_sq_eq_neg_one_new :
-      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → Even (Fintype.card n) :=
-    by
-    intro n inst inst_1 A a_4208770022378861731
-    have assert_7871333867466716481 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = (-1).det :=
-      by repeat (sorry)
-    have assert_11631530961235148209 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = A.det ^ 2 :=
-      by simp only [Matrix.det_pow, Lake.FamilyOut.fam_eq, implies_true]
-    have assert_10225395462020362468 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (-1).det = (-1) ^ Fintype.card n :=
-      by repeat (sorry)
-    have assert_7530522241040816350 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → A.det ^ 2 = (-1) ^ Fintype.card n :=
-      by repeat (sorry)
-    have assert_12134770568446115808 : 0 ≤ A.det ^ 2 := by repeat (sorry)
-    have assert_560847600170312368 :
-      ∀ {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}, A ^ 2 = -1 → Even n := by repeat (sorry)
-    have :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → Even (Fintype.card n) :=
-      by repeat (sorry)
-    repeat (sorry)
--/
--- ## Finished Code corrected by hand
-set_option statesearch.revision "v4.22.0"
-
-theorem even_of_real_matrix_sq_eq_neg_one_new_new' :
-      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → Even (Fintype.card n) :=
-    by
-    intro n inst inst_1 A a_4208770022378861731
-    have assert_7871333867466716481 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = (-1: Matrix n n ℝ).det :=
-      by grind
-    have assert_11631530961235148209 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = A.det ^ 2 :=
-      by simp only [Matrix.det_pow, Lake.FamilyOut.fam_eq, implies_true]
-    have assert_10225395462020362468 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (-1: Matrix n n ℝ).det = (-1) ^ Fintype.card n :=
-      by
-      repeat (sorry)
-    have assert_7530522241040816350 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → A.det ^ 2 = (-1) ^ Fintype.card n :=
-      by
-      grind
-    have assert_12134770568446115808 : 0 ≤ A.det ^ 2 := by exact sq_nonneg A.det --try? gave this
-    have assert_560847600170312368 :
-      ∀ {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}, A ^ 2 = -1 → Even n := by repeat (sorry)
-    have :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → Even (Fintype.card n) :=
-      by repeat (sorry)
-    repeat (sorry)
-
-def example5'' := json% {
-  "document": {
-    "type": "document",
-    "body": [
-      {
-        "type": "Theorem",
-        "label": "thm:A2_minus_I_even_n",
-        "header": "Theorem",
-        "hypothesis": [
           {
             "type": "let_statement",
-            "variable_name": "A",
-            "variable_type": "n × n real matrix",
-            "statement": "Let A be an n × n matrix with real number entries."
+            "variable_name": "λ_1, …, λ_n",
+            "variable_type": "complex numbers",
+            "properties": "eigenvalues of A over ℂ listed with algebraic multiplicity, each in {i, −i}",
+            "statement": "Let λ_1, …, λ_n denote the eigenvalues of A over ℂ, listed with algebraic multiplicity; then each λ_j is either i or −i."
           },
           {
-            "type": "assume_statement",
-            "assumption": "A^2 = -I_n, where I_n is the n × n identity matrix."
-          }
-        ],
-        "claim": "If A^2 = -I_n for an n × n real matrix A, then n is an even integer.",
-        "proof": [
-          {
-            "type": "assert_statement",
-            "claim": "Taking determinants on both sides of A^2 = -I_n gives det(A^2) = det(-I_n).",
-            "proof_method": "by applying the determinant function to both sides of the matrix equation"
+            "type": "let_statement",
+            "variable_name": "k",
+            "variable_type": "integer",
+            "properties": "0 ≤ k ≤ n",
+            "statement": "Let k be the number of indices j such that λ_j = i; then the number of indices j such that λ_j = −i is n − k."
           },
           {
             "type": "assert_statement",
-            "claim": "det(A^2) = (det A)^2.",
-            "proof_method": "use multiplicativity of the determinant det(AB) = det(A) det(B)"
+            "claim": "The determinant of A, viewed as a complex matrix, satisfies det(A) = ∏_{j=1}^n λ_j = i^k · (−i)^{n−k}.",
+            "proof_method": "For a diagonalizable matrix, the determinant equals the product of its eigenvalues counted with algebraic multiplicity."
           },
           {
             "type": "assert_statement",
-            "claim": "det(-I_n) = (-1)^n.",
-            "proof_method": "use that -I_n has eigenvalue −1 with multiplicity n, hence determinant is product of eigenvalues"
+            "claim": "From the matrix identity A^2 = −I_n, taking determinants on both sides and using multiplicativity of the determinant gives det(A^2) = det(−I_n), so (det A)^2 = (−1)^n.",
+            "proof_method": "Apply det to both sides of A^2 = −I_n, use det(A^2) = (det A)^2 and det(−I_n) = (−1)^n det(I_n) = (−1)^n."
           },
           {
             "type": "assert_statement",
-            "claim": "(det A)^2 = (-1)^n.",
-            "proof_method": "combine the identities det(A^2) = (det A)^2 and det(A^2) = det(-I_n)"
+            "claim": "Since A has real entries, det A is a real number, so (det A)^2 is a nonnegative real number; therefore (−1)^n must be a nonnegative real number, forcing (−1)^n = 1.",
+            "proof_method": "Use that the square of a real number is ≥ 0 and that (−1)^n ∈ {1, −1}."
           },
           {
             "type": "assert_statement",
-            "claim": "Since A is a real matrix, det A is a real number, so (det A)^2 is a non-negative real number.",
-            "proof_method": "a square of a real number is always ≥ 0"
-          },
-          {
-            "type": "assert_statement",
-            "claim": "The only way for the real number (-1)^n to be non-negative is that n is an even integer.",
-            "proof_method": "(-1)^n = 1 if n is even and -1 if n is odd"
+            "claim": "The equality (−1)^n = 1 holds if and only if n is an even integer.",
+            "proof_method": "Use the basic parity property that (−1)^n = 1 exactly when n is even."
           },
           {
             "type": "conclude_statement",
@@ -438,111 +147,15 @@ def example5'' := json% {
   }
 }
 
-/--
-error: unknown universe level `u_1`
----
-error: Invalid field `det`: The environment does not contain `Int.det`
-  -1
-has type
-  ℤ
----
-error: unknown universe level `u`
----
-error: unknown universe level `u_1`
----
-error: Invalid field `det`: The environment does not contain `Int.det`
-  -1
-has type
-  ℤ
----
-error: unknown universe level `u_2`
----
-error: unknown universe level `u_1`
----
-error: unknown universe level `u_1`
----
-error: unknown universe level `u`
--/
-#guard_msgs in
-theorem even_of_real_matrix_sq_eq_neg_one''' :
-      ∀ {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}, A ^ 2 = -1 → Even n :=
-    by
-    intro n A a_4208770022378861731
-    have assert_10426046333095612625 :
-      ∀ {n : Type u_1} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = (-1).det :=
-      by
-      repeat (sorry)
-    have assert_13649062577554752972 :
-      ∀ {n : Type u} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = A.det ^ 2 :=
-      by
-      simp only [Matrix.det_pow, Lake.FamilyOut.fam_eq, implies_true]
-    have assert_9605516113412032034 :
-      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → (-1).det = (-1) ^ Fintype.card n :=
-      by
-      repeat (sorry)
-    have assert_382079968291488139 :
-      ∀ {n : Type u_2} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → A.det ^ 2 = (-1) ^ Fintype.card n :=
-      by
-      repeat (sorry)
-    have assert_2171029472328897308 :
-      ∀ {n : Type u_1} [inst : DecidableEq n] [inst_1 : Fintype n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → 0 ≤ A.det ^ 2 :=
-      by
-      exact fun {n} [DecidableEq n] [Fintype n] A a => sq_nonneg A.det
-    have assert_15661547852293129948 :
-      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] {A : Matrix n n ℝ},
-        A ^ 2 = -1 → Even (Fintype.card n) :=
-      by
-      repeat (sorry)
-    have :
-      ∀ {n : Type u} [inst : Fintype n] [inst_1 : DecidableEq n] (A : Matrix n n ℝ),
-        A ^ 2 = -1 → Even (Fintype.card n) :=
-      by
-      repeat (sorry)
-    repeat (sorry)
+#leanaide_connect "http://drongo:8042"
 
--- ## Finished Code corrected by hand
-theorem even_of_real_matrix_sq_eq_neg_one'''' :
-      ∀ {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ}, A ^ 2 = -1 → Even n :=
+theorem even_of_matrix_sq_eq_neg_one :
+      ∀ (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ),
+        A ^ (2 : ℕ) = (-1 : Matrix (Fin n) (Fin n) ℝ) → Even n :=
     by
     intro n A a_4208770022378861731
-    have assert_10426046333095612625 :
-      ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = (-1: Matrix (Fin n) (Fin n) ℝ ).det :=
-      by
-      grind -- filled in by me
-    have assert_13649062577554752972 :
-      ∀ {n : ℕ } (A : Matrix (Fin n) (Fin n) ℝ),
-        A ^ 2 = -1 → (A ^ 2).det = A.det ^ 2 :=
-      by
-      simp only [Matrix.det_pow, Lake.FamilyOut.fam_eq, implies_true]
-    have assert_9605516113412032034 :
-      ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ),
-        A ^ 2 = -1 → (-1 : Matrix (Fin n) (Fin n) ℝ).det = (-1) ^ n :=
-      by
-      intro n A h --filled in by me
-      simp [Matrix.det_neg] --filled in by me
-    have assert_382079968291488139 :
-      ∀ {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ),
-        A ^ 2 = -1 → A.det ^ 2 = (-1) ^ n :=
-      by
-      grind --filled in by me
-    have assert_2171029472328897308 :
-      ∀ {n : ℕ}(A : Matrix (Fin n) (Fin n) ℝ) ,
-        A ^ 2 = -1 → 0 ≤ A.det ^ 2 :=
-      by
-      exact fun A a => sq_nonneg A.det
-    have assert_15661547852293129948 :
-      ∀ {n : ℕ} {A : Matrix (Fin n) (Fin n) ℝ},
-        A ^ 2 = -1 → Even (n) :=
-      by --filled in by me
-      intro n A h
-      have h1 : (-1: ℝ)^n ≥ 0 := by grind
-      have h2 : (-1: ℝ)^n = 1 ∨ (-1: ℝ)^n = -1 := by exact neg_one_pow_eq_or ℝ n
-      have h3 : (-1: ℝ)^n =1 := by grind
-      grind [neg_one_pow_eq_one_iff_even]
-    grind
+    sorry
+
+/- ### Issues:
+1. This is a regression.
+-/
