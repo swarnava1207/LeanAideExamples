@@ -277,61 +277,61 @@ def token_det_of_ortho := 1547279604278449627
 /- ## Rerun -/
 def token_rerun := 1547279604278449627
 
-theorem matrix.det_eq_one_or_neg_one_of_mul_transpose_self_eq_one :
-      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] (Q : Matrix (Fin n) (Fin n) ℝ),
-        Q.det = (1 : ℝ) ∨ Q.det = (-1 : ℝ) :=
-    by
-    intro n inst inst_1 Q
-    have det_mul_of_orthogonal_matrix :
-      ∀ (n : ℕ) (Q A B : Matrix (Fin n) (Fin n) ℝ), (A * B).det = A.det * B.det :=
-      by
-      intro n Q A B
-      simp only [Matrix.det_mul, Lake.FamilyOut.fam_eq]
-    have det_orthogonal_matrix_eq_one :
-      ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ),
-        Matrix.det (1 : Matrix (Fin n) (Fin n) ℝ) = (1 : ℝ) :=
-      by
-      intro n Q
-      simp only [Matrix.det_one]
-    have det_transpose : ∀ (n : ℕ) (Q A : Matrix (Fin n) (Fin n) ℝ), A.transpose.det = A.det :=
-      by
-      intro n Q A
-      simp only [Matrix.det_transpose]
-    have matrix_mul_transpose_eq_one_and_sq_eq_one_imp_eq_or_eq_neg :
-      ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ) (x : ℝ),
-        x ^ (2 : ℕ) = (1 : ℝ) → x = (1 : ℝ) ∨ x = (-1 : ℝ) :=
-      by
-      intro n Q x a_624076733178558240
-      grind only
-    have assert_12367272817766390392 : Q * Q.transpose = (1 : Matrix n n ℝ) → True := by
-      simp only [implies_true]
-    have assert_3094774265472065417 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (Q : Matrix n n ℝ),
-        (Q * Q.transpose).det = Q.det * Q.transpose.det :=
-      by simp only [Matrix.det_mul, Lake.FamilyOut.fam_eq, Matrix.det_transpose, implies_true]
-    have assert_11016007752712757620 :
-      ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ),
-        Matrix.det (1 : Matrix (Fin n) (Fin n) ℝ) = (1 : ℝ) :=
-      by simp only [Matrix.det_one, implies_true]
-    have assert_7394003037343522849 :
-      ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ), Q.det * Q.transpose.det = (1 : ℝ) := by
-      repeat (sorry)
-    have assert_5286476910901901126 :
-      ∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q.transpose.det = Q.det := by
-      simp only [Matrix.det_transpose, implies_true]
-    have assert_13267411253170012430 :
-      ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ), Q.det ^ (2 : ℕ) = (1 : ℝ) := by
-      grind only [#7341, #2d18]
-    have assert_13111406039536395586 : Q.det = (1 : ℝ) ∨ Q.det = (-1 : ℝ) := by repeat (sorry)
-    assumption
+-- theorem matrix.det_eq_one_or_neg_one_of_mul_transpose_self_eq_one :
+--       ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] (Q : Matrix (Fin n) (Fin n) ℝ),
+--         Q.det = (1 : ℝ) ∨ Q.det = (-1 : ℝ) :=
+--     by
+--     intro n inst inst_1 Q
+--     have det_mul_of_orthogonal_matrix :
+--       ∀ (n : ℕ) (Q A B : Matrix (Fin n) (Fin n) ℝ), (A * B).det = A.det * B.det :=
+--       by
+--       intro n Q A B
+--       simp only [Matrix.det_mul, Lake.FamilyOut.fam_eq]
+--     have det_orthogonal_matrix_eq_one :
+--       ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ),
+--         Matrix.det (1 : Matrix (Fin n) (Fin n) ℝ) = (1 : ℝ) :=
+--       by
+--       intro n Q
+--       simp only [Matrix.det_one]
+--     have det_transpose : ∀ (n : ℕ) (Q A : Matrix (Fin n) (Fin n) ℝ), A.transpose.det = A.det :=
+--       by
+--       intro n Q A
+--       simp only [Matrix.det_transpose]
+--     have matrix_mul_transpose_eq_one_and_sq_eq_one_imp_eq_or_eq_neg :
+--       ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ) (x : ℝ),
+--         x ^ (2 : ℕ) = (1 : ℝ) → x = (1 : ℝ) ∨ x = (-1 : ℝ) :=
+--       by
+--       intro n Q x a_624076733178558240
+--       grind only
+--     have assert_12367272817766390392 : Q * Q.transpose = (1 : Matrix n n ℝ) → True := by
+--       simp only [implies_true]
+--     have assert_3094774265472065417 :
+--       ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (Q : Matrix n n ℝ),
+--         (Q * Q.transpose).det = Q.det * Q.transpose.det :=
+--       by simp only [Matrix.det_mul, Lake.FamilyOut.fam_eq, Matrix.det_transpose, implies_true]
+--     have assert_11016007752712757620 :
+--       ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ),
+--         Matrix.det (1 : Matrix (Fin n) (Fin n) ℝ) = (1 : ℝ) :=
+--       by simp only [Matrix.det_one, implies_true]
+--     have assert_7394003037343522849 :
+--       ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ), Q.det * Q.transpose.det = (1 : ℝ) := by
+--       repeat (sorry)
+--     have assert_5286476910901901126 :
+--       ∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q.transpose.det = Q.det := by
+--       simp only [Matrix.det_transpose, implies_true]
+--     have assert_13267411253170012430 :
+--       ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ), Q.det ^ (2 : ℕ) = (1 : ℝ) := by
+--       grind only [#7341, #2d18]
+--     have assert_13111406039536395586 : Q.det = (1 : ℝ) ∨ Q.det = (-1 : ℝ) := by repeat (sorry)
+--     assumption
 
 /- ## Manually fixed -/
 
 theorem matrix.det_eq_one_or_neg_one_of_mul_transpose_self_eq_one_fixed :
-      ∀ {n : Type u_1} [inst : Fintype n] [inst_1 : DecidableEq n] (Q : Matrix n n ℝ),
+      ∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ),
         Q * Q.transpose = 1 → Q.det = (1 : ℝ) ∨ Q.det = (-1 : ℝ) :=
     by
-    intro n inst inst_1 Q h
+    intro n Q h
     have det_mul_of_orthogonal_matrix :
       ∀ (n : ℕ) (Q A B : Matrix (Fin n) (Fin n) ℝ), (A * B).det = A.det * B.det :=
       by
@@ -353,10 +353,10 @@ theorem matrix.det_eq_one_or_neg_one_of_mul_transpose_self_eq_one_fixed :
       by
       intro n Q x a_624076733178558240
       grind only
-    have assert_12367272817766390392 : Q * Q.transpose = (1 : Matrix n n ℝ) → True := by
+    have assert_12367272817766390392 : Q * Q.transpose = (1 : Matrix (Fin n) (Fin n) ℝ) → True := by
       simp only [implies_true]
     have assert_3094774265472065417 :
-      ∀ [inst : DecidableEq n] [inst_1 : Fintype n] (Q : Matrix (Fin n) (Fin n) ℝ),
+      ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ),
         (Q * Q.transpose).det = Q.det * Q.transpose.det :=
       by simp only [Matrix.det_mul, Lake.FamilyOut.fam_eq, Matrix.det_transpose, implies_true]
     have assert_11016007752712757620 :
@@ -366,7 +366,8 @@ theorem matrix.det_eq_one_or_neg_one_of_mul_transpose_self_eq_one_fixed :
     have assert_7394003037343522849 :
       ∀ (n : ℕ) (Q : Matrix (Fin n) (Fin n) ℝ), Q.det * Q.transpose.det = (1 : ℝ) := by
       intro n Q
-      rw [← assert_11016007752712757620 n Q, ← assert_3094774265472065417 Q]
+      rw [← assert_11016007752712757620 n Q, ← assert_3094774265472065417 n Q]
+      sorry
     have assert_5286476910901901126 :
       ∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q.transpose.det = Q.det := by
       simp only [Matrix.det_transpose, implies_true]
@@ -375,3 +376,119 @@ theorem matrix.det_eq_one_or_neg_one_of_mul_transpose_self_eq_one_fixed :
       grind only [#7341, #2d18]
     have assert_13111406039536395586 : Q.det = (1 : ℝ) ∨ Q.det = (-1 : ℝ) := by repeat (sorry)
     assumption
+
+
+/- ## Rerun -/
+
+def token_rerun_fixed := 1547279604278449627
+
+  -- #check "Error: codegen: no valid function found for key theorem"
+  -- #check "Tried functions: #[LeanAide.theoremCode]"
+  -- #check "Errors in functions:"
+  -- #check ""
+  -- #check
+  --   "LeanAide.theoremCode: codegen: failed to translate 'det(Q) = 1 or det(Q) = -1' to a proposition even with 'full statement', error: codegen: no valid type found for assertion 'det(Q) = 1 or det(Q) = -1', full statement Let n be a natural number."
+  -- #check "Let Q be a real n×n matrix."
+  -- #check "Assume that: Q Q^T = I_n"
+  -- #check "det(Q) = 1 or det(Q) = -1; all translations:"
+  -- #check ""
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q * Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q * Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q * Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check
+  --   "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1; full claim: The determinant of Q is either 1 or −1., error: codegen: no valid type found for assertion 'The determinant of Q is either 1 or −1.', full statement Let n be a natural number."
+  -- #check "Let Q be a real n×n matrix."
+  -- #check "Assume that: Q Q^T = I_n"
+  -- #check "The determinant of Q is either 1 or −1.; all translations:"
+  -- #check ""
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ),"
+  -- #check "  Q ⬝ Matrix.transpose Q = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ),"
+  -- #check "  Q ⬝ Matrix.transpose Q = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Qᵀ = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check
+  --   "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Matrix.transpose Q = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ),"
+  -- #check "  Q ⬝ Matrix.transpose Q = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ),"
+  -- #check "  Q ⬝ Matrix.transpose Q = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check
+  --   "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Matrix.transpose Q = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check
+  --   "∀ {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ), Q ⬝ Matrix.transpose Q = 1 → Q.det = 1 ∨ Q.det = -1"
+  -- #check "source:"
+  -- #check "{\"proof\":"
+  -- #check " [{\"type\": \"Theorem\","
+  -- #check "   \"proof\":"
+  -- #check "   [{\"type\": \"Paragraph\","
+  -- #check "     \"text\":"
+  -- #check "     \"Follows from the usual expansion of det as a sum over permutations.\"},"
+  -- #check "    {\"type\": \"conclude_statement\"}],"
+  -- #check "   \"label\": \"lem:multiplicativity_of_determinant\","
+  -- #check "   \"header\": \"Lemma\","
+  -- #check "   \"claim\": \"For all real n×n matrices A and B, det(A B) = det(A) det(B).\"},"
+  -- #check "  {\"type\": \"Theorem\","
+  -- #check "   \"proof\":"
+  -- #check "   [{\"type\": \"Paragraph\","
+  -- #check "     \"text\":"
+  -- #check "     \"In the sum defining det(I_n), only the identity permutation contributes 1.\"},"
+  -- #check "    {\"type\": \"conclude_statement\"}],"
+  -- #check "   \"label\": \"lem:det_identity\","
+  -- #check "   \"header\": \"Lemma\","
+  -- #check "   \"claim\": \"For the real identity matrix I_n, det(I_n) = 1.\"},"
+  -- #check "  {\"type\": \"Theorem\","
+  -- #check "   \"proof\":"
+  -- #check "   [{\"type\": \"Paragraph\","
+  -- #check "     \"text\":"
+  -- #check
+  --   "     \"Transposing exchanges entries according to the sign of each permutation, leaving the total sum unchanged.\"},"
+  -- #check "    {\"type\": \"conclude_statement\"}],"
+  -- #check "   \"label\": \"lem:det_transpose\","
+  -- #check "   \"header\": \"Lemma\","
+  -- #check "   \"claim\": \"For every real n×n matrix A, det(A^T) = det(A).\"},"
+  -- #check "  {\"type\": \"Theorem\","
+  -- #check "   \"proof\":"
+  -- #check "   [{\"type\": \"Paragraph\","
+  -- #check "     \"text\":"
+  -- #check "     \"Factor x^2 - 1 = (x - 1)(x + 1) and apply the zero–product property in R.\"},"
+  -- #check "    {\"type\": \"conclude_statement\"}],"
+  -- #check "   \"label\": \"lem:solutions_x2_eq1_real\","
+  -- #check "   \"header\": \"Lemma\","
+  -- #check "   \"claim\": \"For every real number x, if x^2 = 1 then x = 1 or x = -1.\"},"
+  -- #check "  {\"type\": \"assert_statement\","
+  -- #check "   \"internal_references\": [{\"target_identifier\": \"h_Q\"}],"
+  -- #check "   \"claim\": \"Q Q^T = I_n\"},"
+  -- #check "  {\"type\": \"assert_statement\","
+  -- #check "   \"internal_references\":"
+  -- #check "   [{\"target_identifier\": \"lem:multiplicativity_of_determinant\"}],"
+  -- #check "   \"claim\": \"det(Q Q^T) = det(Q) det(Q^T)\"},"
+  -- #check "  {\"type\": \"assert_statement\","
+  -- #check "   \"internal_references\":"
+  -- #check "   [{\"target_identifier\": \"h_Q\"}, {\"target_identifier\": \"lem:det_identity\"}],"
+  -- #check "   \"claim\": \"det(Q Q^T) = det(I_n) = 1\"},"
+  -- #check "  {\"type\": \"assert_statement\", \"claim\": \"det(Q) det(Q^T) = 1\"},"
+  -- #check "  {\"type\": \"assert_statement\","
+  -- #check "   \"internal_references\": [{\"target_identifier\": \"lem:det_transpose\"}],"
+  -- #check "   \"claim\": \"det(Q^T) = det(Q)\"},"
+  -- #check "  {\"type\": \"assert_statement\", \"claim\": \"det(Q)^2 = 1\"},"
+  -- #check "  {\"type\": \"assert_statement\","
+  -- #check "   \"internal_references\": [{\"target_identifier\": \"lem:solutions_x2_eq1_real\"}],"
+  -- #check "   \"claim\": \"det(Q) = 1 or det(Q) = -1\"},"
+  -- #check "  {\"type\": \"conclude_statement\"}],"
+  -- #check " \"label\": \"thm:orthogonal_matrix_determinant\","
+  -- #check " \"hypothesis\":"
+  -- #check " [{\"variable_type\": \"natural number\","
+  -- #check "   \"variable_name\": \"n\","
+  -- #check "   \"type\": \"let_statement\","
+  -- #check "   \"statement\": \"Let n be a natural number.\"},"
+  -- #check "  {\"variable_type\": \"real n×n matrix\","
+  -- #check "   \"variable_name\": \"Q\","
+  -- #check "   \"type\": \"let_statement\","
+  -- #check "   \"statement\": \"Let Q be a real n×n matrix.\"},"
+  -- #check "  {\"type\": \"assume_statement\", \"label\": \"h_Q\", \"assumption\": \"Q Q^T = I_n\"}],"
+  -- #check " \"header\": \"Theorem\","
+  -- #check " \"claim\": \"det(Q) = 1 or det(Q) = -1\"}"

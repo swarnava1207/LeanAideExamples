@@ -75,7 +75,7 @@ def upper_bound := json% {
     "body": [
       {
         "type": "Definition",
-        "label": "def:S",
+        "label": "def: S",
         "header": "Definition",
         "name": "S",
         "definition": "S := { x ∈ ℝ ∣ x² < 4 }"
@@ -361,6 +361,6 @@ def token_upper_bound := 17306214056521062952
 
 /- ## Rerun -/
 
-def token_rerun := 17306214056521062952
+def token_rerun := 301810945135539704
 
 #codegen_async token_rerun
