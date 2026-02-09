@@ -193,5 +193,3 @@ def example14 := json% {
     ]
   }
 }
-
-#codegen example14
