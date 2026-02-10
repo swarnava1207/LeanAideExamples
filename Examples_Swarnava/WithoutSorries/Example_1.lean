@@ -4,6 +4,8 @@ import Lean.Data.Json
 import Lean
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
+set_option linter.unusedVariables false
+set_option linter.unusedTactic false
 
 #leanaide_connect
 
@@ -254,8 +256,7 @@ def composition_identity := json% {
 }
 
 def token_compose_identity := 9685682525047247032
-set_option linter.unusedVariables false
-set_option linter.unusedTactic false
+
 /- ## LeanAide code with sorries -/
   theorem add_comp_sub :
       ∀ {R : Type u} {V : Type v} [inst : Ring R] [inst_1 : AddCommGroup V] [inst_2 : Module R V]
@@ -311,60 +312,7 @@ set_option linter.unusedTactic false
         "Automation tactics found for A * B = B * A → (A + B) * (A - B) = A ^ 2 - B ^ 2, closing goal"
       exact fun a => Eq.symm (Commute.sq_sub_sq a)
 
-/- ## After putting `grind` at places where it works and manual fixes -/
-set_option linter.unusedVariables false
-set_option linter.unusedTactic false
-/- ## LeanAide code with sorries -/
-  theorem add_mul_sub_mul_eq_sq_sub_sq_iff_commute_withgrind :
-      ∀ {R : Type u} {V : Type v} [inst : Ring R] [inst_1 : AddCommGroup V] [inst_2 : Module R V]
-        (A B : Module.End R V), (A + B) * (A - B) = A ^ 2 - B ^ 2 ↔ A * B = B * A :=
-    by
-    intro R V inst inst_1 inst_2 A B
-    constructor
-    · have assert_12977300746071881897 :
-        ∀ {R : Type u} {V : Type v} [inst : Ring R] [inst_1 : AddCommGroup V]
-          [inst_2 : Module R V] (A B : Module.End R V),
-          (A + B) * (A - B) = A ^ 2 - B ^ 2 → A ^ 2 - A * B + B * A - B ^ 2 = A ^ 2 - B ^ 2 :=
-        by
-        trace
-          "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [add_comp_sub] {aesopPremises := 0, autoPremises := 0} for goal: ∀ {R : Type u_1} {V : Type u_2} [inst : Ring R] [inst_1 : AddCommGroup V] [inst_2 : Module R V] (A B : Module.End R V),\n  (A + B) * (A - B) = A ^ 2 - B ^ 2 → A ^ 2 - A * B + B * A - B ^ 2 = A ^ 2 - B ^ 2"
-        intro R V _ _ _ A B a
-        rw [add_comp_sub] at a
-        assumption
-        trace
-          "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [add_comp_sub] {aesopPremises := 0, autoPremises := 0} for goal: ∀ {R : Type u_1} {V : Type u_2} [inst : Ring R] [inst_1 : AddCommGroup V] [inst_2 : Module R V] (A B : Module.End R V),\n  (A + B) * (A - B) = A ^ 2 - B ^ 2 → A ^ 2 - A * B + B * A - B ^ 2 = A ^ 2 - B ^ 2"
-      have assert_3887007132764540115 : (A + B) * (A - B) = A ^ 2 - B ^ 2 → -A * B + B * A = 0 :=
-        by
-        trace
-          "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: (A + B) * (A - B) = A ^ 2 - B ^ 2 → -A * B + B * A = 0"
-        intro h
-        have prop : A ^ 2 - A * B + B * A - B ^ 2 = A ^ 2 - B ^ 2 := by apply assert_12977300746071881897;exact h
-        simp at prop
-        sorry
-        trace
-          "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: (A + B) * (A - B) = A ^ 2 - B ^ 2 → -A * B + B * A = 0"
-      have assert_7256920704885945213 : (A + B) * (A - B) = A ^ 2 - B ^ 2 → B * A = A * B :=
-        by
-        trace
-          "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: (A + B) * (A - B) = A ^ 2 - B ^ 2 → B * A = A * B"
-        grind
-        trace
-          "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: (A + B) * (A - B) = A ^ 2 - B ^ 2 → B * A = A * B"
-      have : (A + B) * (A - B) = A ^ 2 - B ^ 2 → B * A = A * B :=
-        by
-        trace
-          "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: (A + B) * (A - B) = A ^ 2 - B ^ 2 → B * A = A * B"
-        grind
-        trace
-          "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: (A + B) * (A - B) = A ^ 2 - B ^ 2 → B * A = A * B"
-      trace
-        "Automation Tactics   simp?\n  grind?\n  try (try simp?); exact?\n  hammer {aesopPremises := 5, autoPremises := 0} for goal: (A + B) * (A - B) = A ^ 2 - B ^ 2 → A * B = B * A"
-      grind
-      trace
-        "Finished Automation Tactics   simp?\n  grind?\n  try (try simp?); exact?\n  hammer {aesopPremises := 5, autoPremises := 0} for goal: (A + B) * (A - B) = A ^ 2 - B ^ 2 → A * B = B * A"
-    · trace
-        "Automation tactics found for A * B = B * A → (A + B) * (A - B) = A ^ 2 - B ^ 2, closing goal"
-      exact fun a => Eq.symm (Commute.sq_sub_sq a)
+
 
 /- ## Rerun -/
 def token_rerun := 9685682525047247032
