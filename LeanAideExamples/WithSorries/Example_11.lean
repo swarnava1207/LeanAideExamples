@@ -3,8 +3,6 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
-#leanaide_connect "http://drongo:8042"
-
 /-
 ### Theorem:
 Let $X = \mathbb{R}$. Consider the function $d: \mathbb{R} \times \mathbb{R} \to \mathbb{R}$ defined by:$$d(x, y) = |x^3 - y^3|$$.  Then, the function $d$ is a metric on $\mathbb{R}$.

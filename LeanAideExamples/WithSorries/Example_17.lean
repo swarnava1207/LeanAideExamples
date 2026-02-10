@@ -3,8 +3,6 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
-#leanaide_connect "http://drongo:8042"
-
 /-
 ### Theorem:
 In any simple graph with $n$ vertices (where $n \ge 2$), there are at least two vertices that have the same degree.

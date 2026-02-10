@@ -3,8 +3,6 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
-#leanaide_connect "http://drongo:8042"
-
 /-
 ### Theorem:
 If $x + \frac{1}{x} = 2$ and $x \neq 0$ then $x=1$.

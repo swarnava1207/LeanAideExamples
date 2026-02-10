@@ -3,8 +3,6 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
-#leanaide_connect "http://drongo:8042"
-
 /-
 ### Theorem:
 Let $T : V \to V$ be a linear transformation on a finite-dimensional vector space $V$.
@@ -114,4 +112,4 @@ theorem linear_map.is_compl_ker_range_of_idempotent :
         IsIdempotentElem T → IsCompl (LinearMap.ker T) (LinearMap.range T) :=
     by
     intro K V inst inst_1 inst_2 inst_7439058897038094550 T a_6039170471130198741
-    grind only [IsCompl.symm, LinearMap.IsIdempotentElem.isCompl] 
+    grind only [IsCompl.symm, LinearMap.IsIdempotentElem.isCompl]

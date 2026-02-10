@@ -3,8 +3,6 @@ import Mathlib
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
 
-#leanaide_connect "http://drongo:8042"
-
 /-
 ### Theorem:
 Let $A$ be the $2 \times 2$ matrix:$$A = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix}$$.

@@ -98,7 +98,6 @@ def example8 := json% {
   }
 }
 
-#leanaide_connect "http://drongo:8042"
   #check "Error: codegen: no valid function found for key definition"
   #check "Tried functions: #[LeanAide.defCode]"
   #check "Errors in functions:"
