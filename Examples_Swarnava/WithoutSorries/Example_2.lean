@@ -4,6 +4,8 @@ import Lean.Data.Json
 import Lean
 set_option linter.style.commandStart false
 set_option linter.style.longLine false
+set_option linter.unusedVariables false
+set_option linter.unusedTactic false
 
 #leanaide_connect
 
@@ -201,8 +203,7 @@ def det_of_skew := json% {
 }
 
 def token_det_of_skew := 15019714320031283689
-set_option linter.unusedVariables false
-set_option linter.unusedTactic false
+
 /- ## LeanAide generated proof -/
 theorem det_eq_zero_of_skew_symmetric_of_odd :
       ∀ {n : ℕ}, Odd n → ∀ (A : Matrix (Fin n) (Fin n) ℝ), A.transpose = -A → A.det = 0 :=
@@ -268,124 +269,6 @@ theorem det_eq_zero_of_skew_symmetric_of_odd :
       repeat (sorry)
       trace
         "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: A.det = 0"
-    assumption
-
-/- ## Fixed code -/
-theorem det_eq_zero_of_skew_symmetric_of_odd_fixed :
-      ∀ {n : ℕ}, Odd n → ∀ (A : Matrix (Fin n) (Fin n) ℝ), A.transpose = -A → A.det = 0 :=
-    by
-    intro n a_10880304523033275457 A a_3573833282508702355
-    have matrix.det_transpose : ∀ (M : Matrix (Fin n) (Fin n) ℝ), M.transpose.det = M.det :=
-      by
-      intro M
-      trace "Automation tactics found for M.transpose.det = M.det, closing goal"
-      simp only [Matrix.det_transpose]
-    have det_eq_zero_of_is_skew_symm_of_odd :
-      ∀ (c : ℝ) (M : Matrix (Fin n) (Fin n) ℝ), (c • M).det = c ^ n * M.det :=
-      by
-      intro c M
-      trace "Automation tactics found for (c • M).det = c ^ n * M.det, closing goal"
-      simp only [Matrix.det_smul_of_tower, Lake.FamilyOut.fam_eq, Fintype.card_fin, smul_eq_mul]
-    have assert_17817572314393931825 : A.det = A.transpose.det :=
-      by
-      trace
-        "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [matrix.det_transpose] {aesopPremises := 0, autoPremises := 0} for goal: A.det = A.transpose.det"
-      grind
-      trace
-        "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [matrix.det_transpose] {aesopPremises := 0, autoPremises := 0} for goal: A.det = A.transpose.det"
-    have assert_13880901307137834861 : A.transpose.det = (-A).det :=
-      by
-      trace
-        "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: A.transpose.det = (-A).det"
-      grind
-      trace
-        "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: A.transpose.det = (-A).det"
-    have assert_18378186698846750732 : (-A).det = (-1) ^ n * A.det :=
-      by
-      trace
-        "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [det_eq_zero_of_is_skew_symm_of_odd] {aesopPremises := 0, autoPremises := 0} for goal: (-A).det = (-1) ^ n * A.det"
-      simp [Matrix.det_neg]
-      trace
-        "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [det_eq_zero_of_is_skew_symm_of_odd] {aesopPremises := 0, autoPremises := 0} for goal: (-A).det = (-1) ^ n * A.det"
-    have assert_7450850120357676939 : (-1) ^ n = -1 :=
-      by
-      trace
-        "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: (-1) ^ n = -1"
-      grind [pow_eq_neg_one_iff]
-      trace
-        "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: (-1) ^ n = -1"
-    have assert_220181896978877487 : A.det = -A.det :=
-      by
-      trace
-        "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: A.det = -A.det"
-      repeat (sorry)
-      trace
-        "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: A.det = -A.det"
-    have assert_15045186046465079002 : 2 * A.det = 0 :=
-      by
-      trace
-        "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: 2 * A.det = 0"
-      grind
-      trace
-        "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: 2 * A.det = 0"
-    have assert_12209614742418881578 : A.det = 0 :=
-      by
-      trace
-        "Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: A.det = 0"
-      grind
-      trace
-        "Finished Automation Tactics   simp?\n  try (try simp?); exact?\n  grind?\n  hammer [] {aesopPremises := 0, autoPremises := 0} for goal: A.det = 0"
-    assumption
-
-/- ## Rerun -/
-
-def token_rerun := 15019714320031283689
-
-theorem det_eq_zero_of_skew_symmetric_of_odd_rerun :
-      ∀ {n : ℕ}, Odd n → ∀ (A : Matrix (Fin n) (Fin n) ℝ), A.transpose = -A → A.det = 0 :=
-    by
-    intro n a_10880304523033275457 A a_3573833282508702355
-    have matrix.det_transpose : ∀ (M : Matrix (Fin n) (Fin n) ℝ), M.transpose.det = M.det :=
-      by
-      intro M
-      simp only [Matrix.det_transpose]
-    have det_eq_zero_of_is_skew_symm_of_odd :
-      ∀ (c : ℝ) (M : Matrix (Fin n) (Fin n) ℝ), (c • M).det = c ^ n * M.det :=
-      by
-      intro c M
-      simp only [Matrix.det_smul_of_tower, Lake.FamilyOut.fam_eq, Fintype.card_fin, smul_eq_mul]
-    have assert_17817572314393931825 : A.det = A.transpose.det := by repeat (sorry)
-    have assert_13880901307137834861 : A.transpose.det = (-A).det := by repeat (sorry)
-    have assert_18378186698846750732 : (-A).det = (-1) ^ n * A.det := by repeat (sorry)
-    have assert_7450850120357676939 : (-1) ^ n = -1 := by repeat (sorry)
-    have assert_220181896978877487 : A.det = -A.det := by repeat (sorry)
-    have assert_15045186046465079002 : 2 * A.det = 0 := by repeat (sorry)
-    have assert_12209614742418881578 : A.det = 0 := by repeat (sorry)
-    assumption
-
-/- ## Fixed -/
-
-
-theorem det_eq_zero_of_skew_symmetric_of_odd_rerun_fixed :
-      ∀ {n : ℕ}, Odd n → ∀ (A : Matrix (Fin n) (Fin n) ℝ), A.transpose = -A → A.det = 0 :=
-    by
-    intro n a_10880304523033275457 A a_3573833282508702355
-    have matrix.det_transpose : ∀ (M : Matrix (Fin n) (Fin n) ℝ), M.transpose.det = M.det :=
-      by
-      intro M
-      simp only [Matrix.det_transpose]
-    have det_eq_zero_of_is_skew_symm_of_odd :
-      ∀ (c : ℝ) (M : Matrix (Fin n) (Fin n) ℝ), (c • M).det = c ^ n * M.det :=
-      by
-      intro c M
-      simp only [Matrix.det_smul_of_tower, Lake.FamilyOut.fam_eq, Fintype.card_fin, smul_eq_mul]
-    have assert_17817572314393931825 : A.det = A.transpose.det := by repeat (sorry)
-    have assert_13880901307137834861 : A.transpose.det = (-A).det := by repeat (sorry)
-    have assert_18378186698846750732 : (-A).det = (-1) ^ n * A.det := by repeat (sorry)
-    have assert_7450850120357676939 : (-1) ^ n = -1 := by simp [*] -- used try?
-    have assert_220181896978877487 : A.det = -A.det := by repeat (sorry)
-    have assert_15045186046465079002 : 2 * A.det = 0 := by grind --filled by me
-    have assert_12209614742418881578 : A.det = 0 := by grind --filled by me
     assumption
 
 /- ## Rerun after fixing -/

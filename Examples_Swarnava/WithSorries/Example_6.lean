@@ -137,3 +137,163 @@ def token_mod_const := 17621837947064352636
 --     let ⟨k, assert_9929956014339280108⟩ := assert_908669215696483729
 --     have : a ≡ b [MOD m] := by repeat (sorry)
 --     assumption
+
+/- ## Rerun -/
+def mod_const_rerun := 17621837947064352636
+
+theorem nat_modeq_cancel_right_of_pos :
+      ∀ {m a b c : ℕ}, (0 : ℕ) < c → a * c ≡ b * c [MOD m * c] → a ≡ b [MOD m] :=
+    by
+    intro m a b c a_17567138929456357039 a_16812224502902508722
+    have assert_6372541053894477336 : m * c ∣ a * c - b * c := by repeat (sorry)
+    have assert_14459963362080733523 :
+      ∃ (k : ℤ),
+        a * c - b * c = (a - b) * c ∧
+          ((↑a : ℤ) - (↑b : ℤ)) * (↑c : ℤ) = k * ((↑m : ℤ) * (↑c : ℤ)) :=
+      by repeat (sorry)
+    let ⟨k, assert_13656834882246485629⟩ := assert_14459963362080733523
+    have assert_6639976264167695789 :
+      ∃ (k : ℤ),
+        a * c - b * c = (a - b) * c ∧
+          ((↑a : ℤ) - (↑b : ℤ)) * (↑c : ℤ) = k * ((↑m : ℤ) * (↑c : ℤ)) ∧
+            ((↑a : ℤ) - (↑b : ℤ)) * (↑c : ℤ) = k * (↑m : ℤ) * (↑c : ℤ) :=
+      by grind only [#09f7]
+    let ⟨k, assert_6383408761006007342⟩ := assert_6639976264167695789
+    have assert_14569528127043064430 :
+      ∃ (k : ℤ),
+        a * c - b * c = (a - b) * c ∧
+          ((↑a : ℤ) - (↑b : ℤ)) * (↑c : ℤ) = k * ((↑m : ℤ) * (↑c : ℤ)) ∧ c ≠ (0 : ℕ) :=
+      by grind only [#c166]
+    let ⟨k, assert_15156596574007553997⟩ := assert_14569528127043064430
+    have assert_3131921904924058757 :
+      ∃ (k : ℤ),
+        a * c - b * c = (a - b) * c ∧
+          ((↑a : ℤ) - (↑b : ℤ)) * (↑c : ℤ) = k * ((↑m : ℤ) * (↑c : ℤ)) ∧
+            (↑a : ℤ) - (↑b : ℤ) = k * (↑m : ℤ) :=
+      by
+      simp_all only [mul_eq_mul_right_iff, mul_eq_zero, Int.natCast_eq_zero, or_false, true_and,
+        exists_or_eq_left', ne_eq, not_false_eq_true, and_true]
+      obtain ⟨w, h⟩ := assert_6639976264167695789
+      obtain ⟨left, right⟩ := assert_6383408761006007342
+      obtain ⟨w_1, h_1⟩ := assert_14569528127043064430
+      obtain ⟨left_1, right_1⟩ := assert_15156596574007553997
+      obtain ⟨left_2, right_2⟩ := h
+      obtain ⟨left_3, right_1⟩ := right_1
+      simp_all only [mul_eq_mul_right_iff, mul_eq_zero, Int.natCast_eq_zero, or_false]
+      cases assert_13656834882246485629 with
+      | inl h =>
+        cases left with
+        | inl h_2 =>
+          cases right with
+          | inl h_3 =>
+            cases left_2 with
+            | inl h_4 =>
+              subst h h_2 h_3 h_4
+              simp_all only [and_self, exists_or_eq_left']
+            | inr h_5 =>
+              subst h h_2 h_3 h_5
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+          | inr h_4 =>
+            cases left_2 with
+            | inl h_3 =>
+              subst h h_2 h_4 h_3
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+            | inr h_5 =>
+              subst h h_2 h_4
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+        | inr h_3 =>
+          cases right with
+          | inl h_2 =>
+            cases left_2 with
+            | inl h_4 =>
+              subst h h_3 h_2 h_4
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, sub_self, CharP.cast_eq_zero, mul_zero, or_true, and_self,
+                exists_const]
+            | inr h_5 =>
+              subst h h_3 h_2
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+          | inr h_4 =>
+            cases left_2 with
+            | inl h_2 =>
+              subst h h_3 h_2
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+            | inr h_5 =>
+              subst h h_3
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+      | inr h_2 =>
+        cases left with
+        | inl h =>
+          cases right with
+          | inl h_3 =>
+            cases left_2 with
+            | inl h_4 =>
+              subst h_2 h h_3 h_4
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, sub_self, CharP.cast_eq_zero, mul_zero, or_true, and_self,
+                exists_const]
+            | inr h_5 =>
+              subst h_2 h h_3
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+          | inr h_4 =>
+            cases left_2 with
+            | inl h_3 =>
+              subst h_2 h h_3
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+            | inr h_5 =>
+              subst h_2 h
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+        | inr h_3 =>
+          cases right with
+          | inl h =>
+            cases left_2 with
+            | inl h_4 =>
+              subst h_2 h h_4
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, sub_self, CharP.cast_eq_zero, mul_zero, or_true, and_self,
+                exists_const]
+            | inr h_5 =>
+              subst h_2 h
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+          | inr h_4 =>
+            cases left_2 with
+            | inl h =>
+              subst h_2 h
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+            | inr h_5 =>
+              subst h_2
+              simp_all only [zero_mul, Nat.modEq_zero_iff, mul_eq_mul_right_iff, or_false,
+                tsub_self, dvd_refl, CharP.cast_eq_zero, mul_zero, sub_self, or_true, and_self,
+                exists_const]
+    let ⟨k, assert_8848817755677817007⟩ := assert_3131921904924058757
+    have assert_6262949599614104215 :
+      ∃ (k : ℤ),
+        (a * c - b * c = (a - b) * c ∧
+            ((↑a : ℤ) - (↑b : ℤ)) * (↑c : ℤ) = k * ((↑m : ℤ) * (↑c : ℤ))) ∧
+          m ∣ a - b :=
+      by repeat (sorry)
+    let ⟨k, assert_11226015742624064386⟩ := assert_6262949599614104215
+    have : a ≡ b [MOD m] := by repeat (sorry)
+    assumption
